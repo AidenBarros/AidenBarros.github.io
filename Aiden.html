@@ -24,31 +24,60 @@ html, body{
 }
 
 .journal{
-    max-width:700px;
+    max-width:650px;
 }
 
-.game{
-    width:340px;
+.side{
+    width:360px;
+}
+
+/* petites fenêtres playlists */
+.top-links{
+    display:flex;
+    gap:12px;
+    margin-bottom:25px;
+}
+
+.small-card{
+    flex:1;
+    border:1px solid #00ff9c;
+    padding:10px;
+    text-decoration:none;
+    color:#00ff9c;
+    background:#050505;
+    text-align:center;
+    font-size:14px;
+    letter-spacing:1px;
+}
+
+.small-card:hover{
+    background:#001f16;
+    box-shadow:0 0 10px rgba(0,255,156,.25);
+}
+
+/* carte mini-jeu */
+.game-card{
     border:1px solid #00ff9c;
     padding:12px;
     text-decoration:none;
     color:white;
-    transition:0.2s;
+    display:block;
+    background:#050505;
 }
 
-.game:hover{
+.game-card:hover{
     background:#070707;
     box-shadow:0 0 12px rgba(0,255,156,.25);
 }
 
-.game img{
+.game-card img{
     width:100%;
     display:block;
     border:1px solid #00ff9c;
 }
 
-.game h2{
-    margin:15px 0 0 0;
+.game-card h2{
+    margin:12px 0 0 0;
     color:#00ff9c;
     font-weight:normal;
     letter-spacing:2px;
@@ -84,20 +113,31 @@ Remember to take breaks.
 <p>
 I tried to make it feel like that night, but it just feels wrong.
 </p>
-FUUUCK it's juste so off i dont fucking know how to fix this shit
 
 </div>
 
-<a class="game" href="mini-jeux-1/experiment01.html">
+<div class="side">
 
-<img src="mini-jeux-1/1000004563.jpg" alt="Experiment 01">
+<div class="top-links">
 
-<h2>Experiment_01</h2>
+    <a class="small-card" href="https://youtube.com/playlist?list=PLEOFgfZsM77Pa6VhRhdLci-Bs2ptlWiYT&si=c702q8Aw5qu9bTDh" target="_blank">
+        songs*
+    </a>
 
+    <a class="small-card" href="https://youtube.com/playlist?list=PLEOFgfZsM77O6cjEPn_W0ZBFPnrIOwhCC&si=ztfHZJZEdy4LgYeh" target="_blank">
+        watch later
+    </a>
+
+</div>
+
+<a class="game-card" href="mini-jeux-1/experiment01.html">
+    <img src="mini-jeux-1/1000004563.jpg" alt="Experiment 01">
+    <h2>Experiment_01</h2>
 </a>
 
 </div>
 
-</body>
+</div>
 
+</body>
 </html>
