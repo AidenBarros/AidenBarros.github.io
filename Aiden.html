@@ -3,11 +3,12 @@
 
 <head>
 <meta charset="UTF-8">
+<title>Aiden</title>
 
 <style>
 
 html, body{
-    background-color:black;
+    background:black;
     color:white;
     font-family:monospace;
     margin:0;
@@ -15,10 +16,71 @@ html, body{
     line-height:1.6;
 }
 
-h1{
+.container{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:50px;
+}
+
+.journal{
+    max-width:650px;
+}
+
+.side{
+    width:360px;
+}
+
+/* petites fenêtres playlists */
+.top-links{
+    display:flex;
+    gap:12px;
+    margin-bottom:25px;
+}
+
+.small-card{
+    flex:1;
+    border:1px solid #00ff9c;
+    padding:10px;
+    text-decoration:none;
     color:#00ff9c;
+    background:#050505;
+    text-align:center;
+    font-size:14px;
+    letter-spacing:1px;
+}
+
+.small-card:hover{
+    background:#001f16;
+    box-shadow:0 0 10px rgba(0,255,156,.25);
+}
+
+/* carte mini-jeu */
+.game-card{
+    border:1px solid #00ff9c;
+    padding:12px;
+    text-decoration:none;
+    color:white;
+    display:block;
+    background:#050505;
+}
+
+.game-card:hover{
+    background:#070707;
+    box-shadow:0 0 12px rgba(0,255,156,.25);
+}
+
+.game-card img{
+    width:100%;
+    display:block;
+    border:1px solid #00ff9c;
+}
+
+.game-card h2{
+    margin:12px 0 0 0;
+    color:#00ff9c;
+    font-weight:normal;
     letter-spacing:2px;
-    margin-bottom:40px;
 }
 
 </style>
@@ -26,17 +88,56 @@ h1{
 
 <body>
 
+<div class="container">
+
+<div class="journal">
+
 <p>
-OKAY!! Finally.
-I needed somewhere to put all of this before my head explodes.
+OKAY!! Finally.<br>
+I needed somewhere to put all of this before my head explodes.<br>
 Hopefully this works.
 </p>
+
+<p>
 First game prototype. I'm not sure I'll be able to capture the atmosphere I'm aiming for.
 </p>
+
+<p>
 I've already spent 6 hours on it, and I feel like I've barely made any progress.
 </p>
+
+<p>
 Remember to take breaks.
 </p>
+
+<p>
+I tried to make it feel like that night, but it just feels wrong.
+</p>
+
+</div>
+
+<div class="side">
+
+<div class="top-links">
+
+    <a class="small-card" href="https://youtube.com/playlist?list=PLEOFgfZsM77Pa6VhRhdLci-Bs2ptlWiYT&si=c702q8Aw5qu9bTDh" target="_blank">
+        songs*
+    </a>
+
+    <a class="small-card" href="https://youtube.com/playlist?list=PLEOFgfZsM77O6cjEPn_W0ZBFPnrIOwhCC&si=ztfHZJZEdy4LgYeh" target="_blank">
+        watch later
+    </a>
+
+</div>
+
+<a class="game-card" href="mini-jeux-1/experiment01.html">
+    <img src="mini-jeux-1/1000004563.jpg" alt="Experiment 01">
+    <h2>Experiment_01</h2>
+</a>
+
+</div>
+
+</div>
 
 </body>
 </html>
