@@ -141,12 +141,20 @@ video, img {
     <div id="choiceWish" class="choice"></div>
 </div>
 
+<!-- SCENE FINALE : les 4 choix mènent ici -->
+<div id="sceneFinalVideo" class="scene">
+    <video id="finalVideo" playsinline>
+        <source src="1000004589.mp4" type="video/mp4">
+    </video>
+</div>
+
 <script>
 const startButton = document.getElementById("startButton");
 
 const introVideo = document.getElementById("introVideo");
 const okayVideo = document.getElementById("okayVideo");
 const whatVideo = document.getElementById("whatVideo");
+const finalVideo = document.getElementById("finalVideo");
 
 function showScene(id) {
     document.querySelectorAll(".scene").forEach(scene => {
@@ -155,10 +163,15 @@ function showScene(id) {
     document.getElementById(id).style.display = "block";
 }
 
+function playVideo(video, sceneId) {
+    showScene(sceneId);
+    video.currentTime = 0;
+    video.play();
+}
+
 startButton.onclick = function() {
     startButton.style.display = "none";
-    introVideo.currentTime = 0;
-    introVideo.play();
+    playVideo(introVideo, "sceneIntroVideo");
 };
 
 introVideo.onended = function() {
@@ -167,9 +180,7 @@ introVideo.onended = function() {
 
 /* hm.. okay */
 document.getElementById("choiceOkay").onclick = function() {
-    showScene("sceneOkayVideo");
-    okayVideo.currentTime = 0;
-    okayVideo.play();
+    playVideo(okayVideo, "sceneOkayVideo");
 };
 
 okayVideo.onended = function() {
@@ -178,33 +189,28 @@ okayVideo.onended = function() {
 
 /* Uh... what? */
 document.getElementById("choiceWhat").onclick = function() {
-    showScene("sceneWhatVideo");
-    whatVideo.currentTime = 0;
-    whatVideo.play();
+    playVideo(whatVideo, "sceneWhatVideo");
 };
 
 whatVideo.onended = function() {
     showScene("sceneSecondChoice");
 };
 
-/* Did I hear a cat? */
+/* Les 4 choix finaux mènent à la même vidéo */
 document.getElementById("choiceCat").onclick = function() {
-    alert("suite à ajouter ici");
+    playVideo(finalVideo, "sceneFinalVideo");
 };
 
-/* okay */
 document.getElementById("choiceOkay2").onclick = function() {
-    alert("suite à ajouter ici");
+    playVideo(finalVideo, "sceneFinalVideo");
 };
 
-/* Please... I told you I want to leave */
 document.getElementById("choiceLeave").onclick = function() {
-    alert("suite à ajouter ici");
+    playVideo(finalVideo, "sceneFinalVideo");
 };
 
-/* As you wish... */
 document.getElementById("choiceWish").onclick = function() {
-    alert("suite à ajouter ici");
+    playVideo(finalVideo, "sceneFinalVideo");
 };
 </script>
 
