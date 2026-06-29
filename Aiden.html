@@ -3,11 +3,12 @@
 
 <head>
 <meta charset="UTF-8">
+<title>Aiden</title>
 
 <style>
 
 html, body{
-    background-color:black;
+    background:black;
     color:white;
     font-family:monospace;
     margin:0;
@@ -15,10 +16,42 @@ html, body{
     line-height:1.6;
 }
 
-h1{
+.container{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:50px;
+}
+
+.journal{
+    max-width:700px;
+}
+
+.game{
+    width:340px;
+    border:1px solid #00ff9c;
+    padding:12px;
+    text-decoration:none;
+    color:white;
+    transition:0.2s;
+}
+
+.game:hover{
+    background:#070707;
+    box-shadow:0 0 12px rgba(0,255,156,.25);
+}
+
+.game img{
+    width:100%;
+    display:block;
+    border:1px solid #00ff9c;
+}
+
+.game h2{
+    margin:15px 0 0 0;
     color:#00ff9c;
+    font-weight:normal;
     letter-spacing:2px;
-    margin-bottom:40px;
 }
 
 </style>
@@ -26,19 +59,44 @@ h1{
 
 <body>
 
+<div class="container">
+
+<div class="journal">
+
 <p>
-OKAY!! Finally.
-I needed somewhere to put all of this before my head explodes.
+OKAY!! Finally.<br>
+I needed somewhere to put all of this before my head explodes.<br>
 Hopefully this works.
 </p>
+
+<p>
 First game prototype. I'm not sure I'll be able to capture the atmosphere I'm aiming for.
 </p>
+
+<p>
 I've already spent 6 hours on it, and I feel like I've barely made any progress.
 </p>
+
+<p>
 Remember to take breaks.
 </p>
-I tried to make it feel like that night, but it's... just feel wrong.
+
+<p>
+I tried to make it feel like that night, but it just feels wrong.
 </p>
-    
+
+</div>
+
+<a class="game" href="mini-jeux-1/experiment01.html">
+
+<img src="1000004563.jpg" alt="Experiment 01">
+
+<h2>Experiment_01</h2>
+
+</a>
+
+</div>
+
 </body>
+
 </html>
