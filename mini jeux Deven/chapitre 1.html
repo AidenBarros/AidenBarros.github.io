@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Chapter 1</title>
+
+<style>
+html, body {
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    background:black;
+    overflow:hidden;
+}
+
+.scene {
+    display:none;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+}
+
+video, img {
+    width:100vw;
+    height:100vh;
+    object-fit:contain;
+    background:black;
+}
+
+#startButton {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    z-index:20;
+    padding:15px 30px;
+    background:rgba(0,0,0,0.6);
+    color:white;
+    border:1px solid white;
+    cursor:pointer;
+}
+
+.choice {
+    position:absolute;
+    cursor:pointer;
+}
+
+#sendChoice { left:0; bottom:0; width:50%; height:30%; }
+#firstWaitChoice { right:0; bottom:0; width:50%; height:30%; }
+#secondWaitChoice { right:0; bottom:0; width:50%; height:30%; }
+
+#choiceWalk { left:0%; bottom:12%; width:50%; height:18%; }
+#choiceEat { right:0%; bottom:12%; width:50%; height:18%; }
+#choicePost { left:0%; bottom:0%; width:70%; height:18%; }
+</style>
+</head>
+
+<body>
+
+<audio id="music" loop>
+    <source src="Ghost-Story(chosic.com).mp3" type="audio/mpeg">
+</audio>
+
+<button id="startButton">Start</button>
+
+<div id="sceneIntro" class="scene" style="display:block;">
+    <video id="introVideo" playsinline>
+        <source src="intro.mp4" type="video/mp4">
+    </video>
+</div>
+
+<div id="sceneFirstChoice" class="scene">
+    <img src="1000004494.jpg">
+    <div id="sendChoice" class="choice"></div>
+    <div id="firstWaitChoice" class="choice"></div>
+</div>
+
+<div id="sceneMessageVideo" class="scene">
+    <video id="messageVideo" playsinline>
+        <source src="message.mp4" type="video/mp4">
+    </video>
+</div>
+
+<div id="sceneSecondWait" class="scene">
+    <img src="1000004499.jpg">
+    <div id="secondWaitChoice" class="choice"></div>
+</div>
+
+<div id="sceneWaitVideo" class="scene">
+    <video id="waitVideo" playsinline>
+        <source src="wait.mp4" type="video/mp4">
+    </video>
+</div>
+
+<div id="sceneFinalChoice" class="scene">
+    <img src="1000004514.jpg">
+    <div id="choiceWalk" class="choice"></div>
+    <div id="choiceEat" class="choice"></div>
+    <div id="choicePost" class="choice"></div>
+</div>
+
+<div id="sceneWalkVideo" class="scene">
+    <video id="walkVideo" playsinline>
+        <source src="walk.mp4" type="video/mp4">
+    </video>
+</div>
+
+<div id="sceneEatVideo" class="scene">
+    <video id="eatVideo" playsinline>
+        <source src="eat.mp4" type="video/mp4">
+    </video>
+</div>
+
+<div id="scenePostVideo" class="scene">
+    <video id="postVideo" playsinline>
+        <source src="post.mp4" type="video/mp4">
+    </video>
+</div>
+
+<script>
+const music = document.getElementById("music");
+const startButton = document.getElementById("startButton");
+
+const introVideo = document.getElementById("introVideo");
+const messageVideo = document.getElementById("messageVideo");
+const waitVideo = document.getElementById("waitVideo");
+const walkVideo = document.getElementById("walkVideo");
+const eatVideo = document.getElementById("eatVideo");
+const postVideo = document.getElementById("postVideo");
+
+function showScene(id) {
+    document.querySelectorAll(".scene").forEach(scene => {
+        scene.style.display = "none";
+    });
+    document.getElementById(id).style.display = "block";
+}
+
+function playVideo(video, sceneId) {
+    showScene(sceneId);
+    video.currentTime = 0;
+    video.play();
+}
+
+startButton.onclick = function() {
+    startButton.style.display = "none";
+    music.play();
+    playVideo(introVideo, "sceneIntro");
+};
+
+introVideo.onended = function() {
+    showScene("sceneFirstChoice");
+};
+
+document.getElementById("sendChoice").onclick = function() {
+    playVideo(messageVideo, "sceneMessageVideo");
+};
+
+document.getElementById("firstWaitChoice").onclick = function() {
+    playVideo(waitVideo, "sceneWaitVideo");
+};
+
+messageVideo.onended = function() {
+    showScene("sceneSecondWait");
+};
+
+document.getElementById("secondWaitChoice").onclick = function() {
+    playVideo(waitVideo, "sceneWaitVideo");
+};
+
+waitVideo.onended = function() {
+    showScene("sceneFinalChoice");
+};
+
+document.getElementById("choiceWalk").onclick = function() {
+    playVideo(walkVideo, "sceneWalkVideo");
+};
+
+document.getElementById("choiceEat").onclick = function() {
+    playVideo(eatVideo, "sceneEatVideo");
+};
+
+document.getElementById("choicePost").onclick = function() {
+    playVideo(postVideo, "scenePostVideo");
+};
+</script>
+
+</body>
+</html>

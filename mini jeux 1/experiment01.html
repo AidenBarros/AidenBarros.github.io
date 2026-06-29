@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Experiment_01</title>
+
+<style>
+html, body {
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    background:black;
+    overflow:hidden;
+}
+
+.scene {
+    display:none;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+}
+
+video, img {
+    width:100vw;
+    height:100vh;
+    object-fit:contain;
+    background:black;
+}
+
+#startButton {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    z-index:20;
+    padding:15px 30px;
+    background:rgba(0,0,0,0.6);
+    color:white;
+    border:1px solid white;
+    cursor:pointer;
+}
+
+.choice {
+    position:absolute;
+    cursor:pointer;
+}
+
+/* Image 1000004563 */
+#choiceOkay {
+    left:3%;
+    bottom:3%;
+    width:42%;
+    height:24%;
+}
+
+#choiceWhat {
+    right:3%;
+    bottom:3%;
+    width:42%;
+    height:24%;
+}
+
+/* Image 1000004571 */
+#choiceLeave {
+    left:3%;
+    bottom:3%;
+    width:42%;
+    height:24%;
+}
+
+#choiceWish {
+    right:3%;
+    bottom:3%;
+    width:42%;
+    height:24%;
+}
+
+/* Image 1000004573 */
+#choiceCat {
+    left:3%;
+    bottom:3%;
+    width:42%;
+    height:24%;
+}
+
+#choiceOkay2 {
+    right:3%;
+    bottom:3%;
+    width:42%;
+    height:24%;
+}
+</style>
+</head>
+
+<body>
+
+<button id="startButton">Start</button>
+
+<!-- SCENE 1 : première vidéo -->
+<div id="sceneIntroVideo" class="scene" style="display:block;">
+    <video id="introVideo" playsinline>
+        <source src="1000004564.mp4" type="video/mp4">
+    </video>
+</div>
+
+<!-- SCENE 2 : premier choix -->
+<div id="sceneFirstChoice" class="scene">
+    <img src="1000004563.jpg">
+    <div id="choiceOkay" class="choice"></div>
+    <div id="choiceWhat" class="choice"></div>
+</div>
+
+<!-- SCENE 3A : vidéo après hm.. okay -->
+<div id="sceneOkayVideo" class="scene">
+    <video id="okayVideo" playsinline>
+        <source src="1000004574.mp4" type="video/mp4">
+    </video>
+</div>
+
+<!-- SCENE 4A : choix après hm.. okay -->
+<div id="sceneThirdChoice" class="scene">
+    <img src="1000004573.jpg">
+    <div id="choiceCat" class="choice"></div>
+    <div id="choiceOkay2" class="choice"></div>
+</div>
+
+<!-- SCENE 3B : vidéo après Uh... what? -->
+<div id="sceneWhatVideo" class="scene">
+    <video id="whatVideo" playsinline>
+        <source src="1000004572.mp4" type="video/mp4">
+    </video>
+</div>
+
+<!-- SCENE 4B : deuxième choix -->
+<div id="sceneSecondChoice" class="scene">
+    <img src="1000004571.jpg">
+    <div id="choiceLeave" class="choice"></div>
+    <div id="choiceWish" class="choice"></div>
+</div>
+
+<script>
+const startButton = document.getElementById("startButton");
+
+const introVideo = document.getElementById("introVideo");
+const okayVideo = document.getElementById("okayVideo");
+const whatVideo = document.getElementById("whatVideo");
+
+function showScene(id) {
+    document.querySelectorAll(".scene").forEach(scene => {
+        scene.style.display = "none";
+    });
+    document.getElementById(id).style.display = "block";
+}
+
+startButton.onclick = function() {
+    startButton.style.display = "none";
+    introVideo.currentTime = 0;
+    introVideo.play();
+};
+
+introVideo.onended = function() {
+    showScene("sceneFirstChoice");
+};
+
+/* hm.. okay */
+document.getElementById("choiceOkay").onclick = function() {
+    showScene("sceneOkayVideo");
+    okayVideo.currentTime = 0;
+    okayVideo.play();
+};
+
+okayVideo.onended = function() {
+    showScene("sceneThirdChoice");
+};
+
+/* Uh... what? */
+document.getElementById("choiceWhat").onclick = function() {
+    showScene("sceneWhatVideo");
+    whatVideo.currentTime = 0;
+    whatVideo.play();
+};
+
+whatVideo.onended = function() {
+    showScene("sceneSecondChoice");
+};
+
+/* Did I hear a cat? */
+document.getElementById("choiceCat").onclick = function() {
+    alert("suite à ajouter ici");
+};
+
+/* okay */
+document.getElementById("choiceOkay2").onclick = function() {
+    alert("suite à ajouter ici");
+};
+
+/* Please... I told you I want to leave */
+document.getElementById("choiceLeave").onclick = function() {
+    alert("suite à ajouter ici");
+};
+
+/* As you wish... */
+document.getElementById("choiceWish").onclick = function() {
+    alert("suite à ajouter ici");
+};
+</script>
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+
+<style>
+body{
+    background:black;
+    color:#00ff9c;
+    font-family:monospace;
+    text-align:center;
+    margin-top:120px;
+}
+
+h1{
+    letter-spacing:2px;
+}
+
+input{
+    background:black;
+    border:1px solid #00ff9c;
+    color:#00ff9c;
+    padding:8px;
+    margin:10px;
+}
+
+button{
+    background:black;
+    border:1px solid #00ff9c;
+    color:#00ff9c;
+    padding:8px 20px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#00ff9c;
+    color:black;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Login</h1>
+<p>Authentication required</p>
+
+<input id="username" placeholder="username"><br>
+<input id="password" type="password" placeholder="password"><br>
+
+<button onclick="login()">Login</button>
+
+<p id="message"></p>
+
+<script>
+
+function login(){
+
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
+
+    if(user == "AidenBarros" && pass == "BF8Y247"){
+        window.location.href = "journal.html";
+    }
+
+    else if(user == "DevenRitchet" && pass == "DG802"){
+        window.location.href = "journal2.html";
+    }
+
+    else{
+        document.getElementById("message").innerText = "Access denied";
+    }
+
+}
+
+// Permet d'appuyer sur Entrée dans les deux champs
+document.getElementById("username").addEventListener("keydown", function(event){
+
+    if(event.key === "Enter"){
+        login();
+    }
+
+});
+
+document.getElementById("password").addEventListener("keydown", function(event){
+
+    if(event.key === "Enter"){
+        login();
+    }
+
+});
+
+</script>
+
+</body>
+</html>
