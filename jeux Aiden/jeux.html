@@ -281,35 +281,40 @@ html, body{
     </video>
 
 </div>
+    <div class="scene" id="scenePanic">
+
+    <video id="panicVideo" playsinline>
+        <source src="panique.mp4" type="video/mp4">
+    </video>
+
+</div>
+
+<div class="scene" id="sceneWait">
+
+    <video id="waitVideo" playsinline>
+        <source src="attendre.mp4" type="video/mp4">
+    </video>
+
+</div>
 
 <script>
 const menu = document.getElementById("menu");
 const chapterMenu = document.getElementById("chapterMenu");
 const intro = document.getElementById("intro");
 const music = document.getElementById("music");
+
 const windowVideo = document.getElementById("windowVideo");
-    windowVideo.onended = function(){
+const doorVideo = document.getElementById("doorVideo");
+const panicVideo = document.getElementById("panicVideo");
+const waitVideo = document.getElementById("waitVideo");
 
-    watched.window = true;
-
-    checkChoice1();
-
-};
-const doorVideo = document.getElementById("doorVideo"); 
-    doorVideo.onended = function(){
-
-    watched.door = true;
-
-    checkChoice1();
-
-};
 const homeButton = document.getElementById("homeButton");
 
 let unlocked = {
     optionA1:false,
     optionB1:false
 };
-    
+
 let watched = {
     window:false,
     door:false
@@ -330,6 +335,42 @@ function updateChapters(){
     document.getElementById("optionB1").innerText =
         unlocked.optionB1 ? "└─ ■ Option B1" : "└─ □ Option B1";
 }
+
+function checkChoice1(){
+    if(watched.window && watched.door){
+
+        showScene("scenePanic");
+
+        panicVideo.currentTime = 0;
+        panicVideo.play();
+
+    }else{
+
+        showScene("sceneChoice");
+
+    }
+}
+
+windowVideo.onended = function(){
+    watched.window = true;
+    checkChoice1();
+};
+
+doorVideo.onended = function(){
+    watched.door = true;
+    checkChoice1();
+};
+
+panicVideo.onended = function(){
+    showScene("sceneWait");
+
+    waitVideo.currentTime = 0;
+    waitVideo.play();
+};
+
+waitVideo.onended = function(){
+    showScene("sceneChoice2");
+};
 
 function startMusic(){
     music.volume = 0;
@@ -393,6 +434,10 @@ function goToOptionA1(){
     chapterMenu.style.display = "none";
 
     showScene("sceneWindow");
+
+    windowVideo.currentTime = 0;
+    windowVideo.play();
+
     homeButton.style.display = "block";
 }
 
@@ -403,6 +448,10 @@ function goToOptionB1(){
     chapterMenu.style.display = "none";
 
     showScene("sceneDoor");
+
+    doorVideo.currentTime = 0;
+    doorVideo.play();
+
     homeButton.style.display = "block";
 }
 
@@ -421,7 +470,6 @@ function toggleHelp(){
 }
 
 document.getElementById("choiceWindow").onclick = function(){
-
     unlocked.optionA1 = true;
     updateChapters();
 
@@ -431,11 +479,9 @@ document.getElementById("choiceWindow").onclick = function(){
     windowVideo.play();
 
     homeButton.style.display = "block";
-
 };
 
 document.getElementById("choiceDoor").onclick = function(){
-
     unlocked.optionB1 = true;
     updateChapters();
 
@@ -445,23 +491,7 @@ document.getElementById("choiceDoor").onclick = function(){
     doorVideo.play();
 
     homeButton.style.display = "block";
-
 };
-    function checkChoice1(){
-
-    if(watched.window && watched.door){
-
-        // aller au Choix 2
-        showScene("sceneChoice2");
-
-    }else{
-
-        // revenir au Choix 1
-        showScene("sceneChoice");
-
-    }
-
-}
 
 function goHome(){
     document.querySelectorAll(".scene").forEach(scene => {
@@ -473,6 +503,18 @@ function goHome(){
 
     intro.pause();
     intro.currentTime = 0;
+
+    windowVideo.pause();
+    windowVideo.currentTime = 0;
+
+    doorVideo.pause();
+    doorVideo.currentTime = 0;
+
+    panicVideo.pause();
+    panicVideo.currentTime = 0;
+
+    waitVideo.pause();
+    waitVideo.currentTime = 0;
 
     music.pause();
     music.currentTime = 0;
