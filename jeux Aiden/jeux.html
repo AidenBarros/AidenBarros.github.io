@@ -288,12 +288,31 @@ const chapterMenu = document.getElementById("chapterMenu");
 const intro = document.getElementById("intro");
 const music = document.getElementById("music");
 const windowVideo = document.getElementById("windowVideo");
-const doorVideo = document.getElementById("doorVideo");   
+    windowVideo.onended = function(){
+
+    watched.window = true;
+
+    checkChoice1();
+
+};
+const doorVideo = document.getElementById("doorVideo"); 
+    doorVideo.onended = function(){
+
+    watched.door = true;
+
+    checkChoice1();
+
+};
 const homeButton = document.getElementById("homeButton");
 
 let unlocked = {
     optionA1:false,
     optionB1:false
+};
+    
+let watched = {
+    window:false,
+    door:false
 };
 
 function showScene(id){
@@ -428,6 +447,21 @@ document.getElementById("choiceDoor").onclick = function(){
     homeButton.style.display = "block";
 
 };
+    function checkChoice1(){
+
+    if(watched.window && watched.door){
+
+        // aller au Choix 2
+        showScene("sceneChoice2");
+
+    }else{
+
+        // revenir au Choix 1
+        showScene("sceneChoice");
+
+    }
+
+}
 
 function goHome(){
     document.querySelectorAll(".scene").forEach(scene => {
