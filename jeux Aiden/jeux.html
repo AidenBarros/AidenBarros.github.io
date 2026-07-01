@@ -267,11 +267,19 @@ html, body{
 </div>
 
 <div class="scene" id="sceneWindow">
-    <h1 style="color:white;text-align:center;margin-top:45vh;">WINDOW PATH</h1>
+
+    <video id="windowVideo" playsinline>
+        <source src="B1-window.mp4" type="video/mp4">
+    </video>
+
 </div>
 
 <div class="scene" id="sceneDoor">
-    <h1 style="color:white;text-align:center;margin-top:45vh;">DOOR PATH</h1>
+
+    <video id="doorVideo" playsinline>
+        <source src="B2-door.mp4" type="video/mp4">
+    </video>
+
 </div>
 
 <script>
@@ -279,6 +287,8 @@ const menu = document.getElementById("menu");
 const chapterMenu = document.getElementById("chapterMenu");
 const intro = document.getElementById("intro");
 const music = document.getElementById("music");
+const windowVideo = document.getElementById("windowVideo");
+const doorVideo = document.getElementById("doorVideo");   
 const homeButton = document.getElementById("homeButton");
 
 let unlocked = {
@@ -392,19 +402,31 @@ function toggleHelp(){
 }
 
 document.getElementById("choiceWindow").onclick = function(){
+
     unlocked.optionA1 = true;
     updateChapters();
 
     showScene("sceneWindow");
+
+    windowVideo.currentTime = 0;
+    windowVideo.play();
+
     homeButton.style.display = "block";
+
 };
 
 document.getElementById("choiceDoor").onclick = function(){
+
     unlocked.optionB1 = true;
     updateChapters();
 
     showScene("sceneDoor");
+
+    doorVideo.currentTime = 0;
+    doorVideo.play();
+
     homeButton.style.display = "block";
+
 };
 
 function goHome(){
