@@ -267,11 +267,34 @@ html, body{
 </div>
 
 <div class="scene" id="sceneWindow">
-    <h1 style="color:white;text-align:center;margin-top:45vh;">WINDOW PATH</h1>
+
+    <video id="windowVideo" playsinline>
+        <source src="B1-window.mp4" type="video/mp4">
+    </video>
+
 </div>
 
 <div class="scene" id="sceneDoor">
-    <h1 style="color:white;text-align:center;margin-top:45vh;">DOOR PATH</h1>
+
+    <video id="doorVideo" playsinline>
+        <source src="B2-door.mp4" type="video/mp4">
+    </video>
+
+</div>
+    <div class="scene" id="scenePanic">
+
+    <video id="panicVideo" playsinline>
+        <source src="panique.mp4" type="video/mp4">
+    </video>
+
+</div>
+
+<div class="scene" id="sceneWait">
+
+    <video id="waitVideo" playsinline>
+        <source src="attendre.mp4" type="video/mp4">
+    </video>
+
 </div>
 
 <script>
@@ -279,11 +302,22 @@ const menu = document.getElementById("menu");
 const chapterMenu = document.getElementById("chapterMenu");
 const intro = document.getElementById("intro");
 const music = document.getElementById("music");
+
+const windowVideo = document.getElementById("windowVideo");
+const doorVideo = document.getElementById("doorVideo");
+const panicVideo = document.getElementById("panicVideo");
+const waitVideo = document.getElementById("waitVideo");
+
 const homeButton = document.getElementById("homeButton");
 
 let unlocked = {
     optionA1:false,
     optionB1:false
+};
+
+let watched = {
+    window:false,
+    door:false
 };
 
 function showScene(id){
@@ -301,6 +335,42 @@ function updateChapters(){
     document.getElementById("optionB1").innerText =
         unlocked.optionB1 ? "└─ ■ Option B1" : "└─ □ Option B1";
 }
+
+function checkChoice1(){
+    if(watched.window && watched.door){
+
+        showScene("scenePanic");
+
+        panicVideo.currentTime = 0;
+        panicVideo.play();
+
+    }else{
+
+        showScene("sceneChoice");
+
+    }
+}
+
+windowVideo.onended = function(){
+    watched.window = true;
+    checkChoice1();
+};
+
+doorVideo.onended = function(){
+    watched.door = true;
+    checkChoice1();
+};
+
+panicVideo.onended = function(){
+    showScene("sceneWait");
+
+    waitVideo.currentTime = 0;
+    waitVideo.play();
+};
+
+waitVideo.onended = function(){
+    showScene("sceneChoice2");
+};
 
 function startMusic(){
     music.volume = 0;
@@ -364,6 +434,10 @@ function goToOptionA1(){
     chapterMenu.style.display = "none";
 
     showScene("sceneWindow");
+
+    windowVideo.currentTime = 0;
+    windowVideo.play();
+
     homeButton.style.display = "block";
 }
 
@@ -374,6 +448,10 @@ function goToOptionB1(){
     chapterMenu.style.display = "none";
 
     showScene("sceneDoor");
+
+    doorVideo.currentTime = 0;
+    doorVideo.play();
+
     homeButton.style.display = "block";
 }
 
@@ -396,6 +474,10 @@ document.getElementById("choiceWindow").onclick = function(){
     updateChapters();
 
     showScene("sceneWindow");
+
+    windowVideo.currentTime = 0;
+    windowVideo.play();
+
     homeButton.style.display = "block";
 };
 
@@ -404,6 +486,10 @@ document.getElementById("choiceDoor").onclick = function(){
     updateChapters();
 
     showScene("sceneDoor");
+
+    doorVideo.currentTime = 0;
+    doorVideo.play();
+
     homeButton.style.display = "block";
 };
 
@@ -417,6 +503,18 @@ function goHome(){
 
     intro.pause();
     intro.currentTime = 0;
+
+    windowVideo.pause();
+    windowVideo.currentTime = 0;
+
+    doorVideo.pause();
+    doorVideo.currentTime = 0;
+
+    panicVideo.pause();
+    panicVideo.currentTime = 0;
+
+    waitVideo.pause();
+    waitVideo.currentTime = 0;
 
     music.pause();
     music.currentTime = 0;
