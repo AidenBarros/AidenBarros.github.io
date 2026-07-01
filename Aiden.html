@@ -1,200 +1,86 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-<meta charset="UTF-8">
-<title>Aiden</title>
-
-<style>
-
-html, body{
-    background:black;
-    color:white;
-    font-family:monospace;
-    margin:0;
-    padding:60px;
-    line-height:1.6;
-    position:relative;
-}
-
-.container{
-    display:flex;
-    justify-content:center;
-    align-items:flex-start;
-    gap:50px;
-}
-
-.journal{
-    width:900px;
-}
-
-.side{
-    width:360px;
-    flex-shrink:0;
-}
-
-/* ---------- GIF ---------- */
-
-.gif-test{
-    display:flex;
-    align-items:flex-start;
-    gap:20px;
-    margin-top:25px;
-}
-
-.gif-text{
-    color:white;
-    font-size:14px;
-    white-space:nowrap;
-    margin-top:5px;
-}
-
-.journal-gif{
-    max-width:100%;
-}
-
-/* ---------- Sketch video ---------- */
-
-.sketch-test{
-    display:flex;
-    align-items:flex-start;
-    gap:25px;
-    margin-top:35px;
-}
-
-.sketch-video{
-    width:300px;
-    flex-shrink:0;
-    border:none;
-    background:black;
-}
-
-.sketch-text{
-    color:white;
-    font-size:14px;
-    line-height:1.6;
-    flex:1;
-}
-
-.sketch-text p{
-    margin:0 0 18px 0;
-}
-
-/* ---------- Playlists ---------- */
-
-.top-links{
-    display:flex;
-    gap:20px;
-    margin-bottom:25px;
-}
-
-.playlist{
-    position:relative;
-    width:170px;
-    display:block;
-    text-decoration:none;
-    overflow:hidden;
-}
-
-.playlist img{
-    width:100%;
-    display:block;
-    transition:.2s;
-}
-
-.playlist span{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    padding:8px;
-    box-sizing:border-box;
-    background:rgba(0,0,0,.55);
-    color:#00ff9c;
-    font-size:14px;
-    letter-spacing:1px;
-}
-
-.playlist:hover img{
-    transform:scale(1.02);
-    opacity:.9;
-}
-
-/* ---------- Mini-jeu ---------- */
-
-.game-card{
-    display:block;
-    text-decoration:none;
-    color:white;
-}
-
-.game-card img{
-    width:100%;
-    display:block;
-    border:1px solid #00ff9c;
-    transition:.2s;
-}
-
-.game-card img:hover{
-    transform:scale(1.02);
-    opacity:.9;
-}
-
-.game-card h2{
-    margin:12px 0 0 0;
-    color:#00ff9c;
-    font-weight:normal;
-    letter-spacing:2px;
-}
-
-</style>
-</head>
-
 <body>
 
 <div class="container">
 
-<div class="journal">
+    <div class="journal">
 
-<p>
-OKAY!! Finally.<br>
-I needed somewhere to put all of this before my head explodes.<br>
-Hopefully this works.
-</p>
+        <p>
+        OKAY!! Finally.<br>
+        I needed somewhere to put all of this before my head explodes.<br>
+        Hopefully this works.
+        </p>
 
-<p>
-First game prototype. I'm not sure I'll be able to capture the atmosphere I'm aiming for.
-</p>
+        <p>
+        First game prototype. I'm not sure I'll be able to capture the atmosphere I'm aiming for.
+        </p>
 
-<p>
-I've already spent 6 hours on it, and I feel like I've barely made any progress.
-</p>
+        <p>
+        I've already spent 6 hours on it, and I feel like I've barely made any progress.
+        </p>
 
-<p>
-Remember to take breaks.
-</p>
+        <p>
+        Remember to take breaks.
+        </p>
 
-<p>
-I tried to make it feel like that night, but it just feels wrong.
-</p>
+        <p>
+        I tried to make it feel like that night, but it just feels wrong.
+        </p>
 
-<p>
-FUUUUCK IT'S JUST A PILE OF FUCKING TRASH
-</p>
+        <p>
+        FUUUUCK IT'S JUST A PILE OF FUCKING TRASH
+        </p>
 
-<p>
-i can't ever fix this shit. fuck it.
-</p>
+        <p>
+        i can't ever fix this shit. fuck it.
+        </p>
 
-<div class="gif-test">
+        <div class="gif-test">
 
-    <img src="testgif1.gif" class="journal-gif" alt="Animation test">
+            <img src="testgif1.gif" class="journal-gif" alt="Animation test">
 
-    <div class="gif-text">
-        ok so... i wanted to try making a little gif<br><br>
-        and i honestly HATE IT but now...<br><br>
-        on the page with rebzyyx its not that bad<br><br>
-        after all. not perfect but okay.
+            <div class="gif-text">
+                ok so... i wanted to try making a little gif<br><br>
+                and i honestly HATE IT but now...<br><br>
+                on the page with rebzyyx its not that bad<br><br>
+                after all. not perfect but okay.
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="side">
+
+        <div class="top-links">
+
+            <a class="playlist"
+            href="https://youtube.com/playlist?list=PLEOFgfZsM77Pa6VhRhdLci-Bs2ptlWiYT&si=c702q8Aw5qu9bTDh"
+            target="_blank">
+
+                <span>Play-list song*</span>
+                <img src="songs.png" alt="songs">
+
+            </a>
+
+            <a class="playlist"
+            href="https://youtube.com/playlist?list=PLEOFgfZsM77O6cjEPn_W0ZBFPnrIOwhCC&si=ztfHZJZEdy4LgYeh"
+            target="_blank">
+
+                <span>Watch later</span>
+                <img src="watchlater.png" alt="watch later">
+
+            </a>
+
+        </div>
+
+        <a class="game-card" href="mini-jeux-1/experiment01.html">
+
+            <img src="mini-jeux-1/1000004563.jpg" alt="Experiment_01">
+
+            <h2>Experiment_01</h2>
+
+        </a>
+
     </div>
 
 </div>
@@ -223,41 +109,19 @@ i can't ever fix this shit. fuck it.
 
 </div>
 
-</div>
+<div class="homegame-test">
 
-<div class="side">
+    <div class="homegame-text">
 
-<div class="top-links">
+        <p>TON TEXTE ICI.</p>
 
-<a class="playlist"
-href="https://youtube.com/playlist?list=PLEOFgfZsM77Pa6VhRhdLci-Bs2ptlWiYT&si=c702q8Aw5qu9bTDh"
-target="_blank">
+        <p>TON DEUXIÈME PARAGRAPHE ICI.</p>
 
-<span>Play-list song*</span>
-<img src="songs.png" alt="songs">
+    </div>
 
-</a>
-
-<a class="playlist"
-href="https://youtube.com/playlist?list=PLEOFgfZsM77O6cjEPn_W0ZBFPnrIOwhCC&si=ztfHZJZEdy4LgYeh"
-target="_blank">
-
-<span>Watch later</span>
-<img src="watchlater.png" alt="watch later">
-
-</a>
-
-</div>
-
-<a class="game-card" href="mini-jeux-1/experiment01.html">
-
-<img src="mini-jeux-1/1000004563.jpg" alt="Experiment_01">
-
-<h2>Experiment_01</h2>
-
-</a>
-
-</div>
+    <video class="homegame-video" autoplay muted loop playsinline>
+        <source src="videohome-game.mp4" type="video/mp4">
+    </video>
 
 </div>
 
