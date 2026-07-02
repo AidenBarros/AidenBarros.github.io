@@ -244,7 +244,7 @@ html, body{
 
         <br>
 
-        <div class="locked">🔒 Chapter 2</div>
+        <div id="chapter2Line" class="locked">🔒 Chapter 2</div>
         <div class="locked">🔒 Chapter 3</div>
         <div class="locked">🔒 Chapter 4</div>
 
@@ -343,7 +343,8 @@ const homeButton = document.getElementById("homeButton");
 
 let unlocked = {
     optionA1:false,
-    optionB1:false
+    optionB1:false,
+    chapter2:false
 };
 
 let watched = {
@@ -360,11 +361,20 @@ function showScene(id){
 }
 
 function updateChapters(){
+
     document.getElementById("optionA1").innerText =
         unlocked.optionA1 ? "├─ ■ Option A1" : "├─ □ Option A1";
 
     document.getElementById("optionB1").innerText =
         unlocked.optionB1 ? "└─ ■ Option B1" : "└─ □ Option B1";
+
+    const chapter2 = document.getElementById("chapter2Line");
+
+    if(unlocked.chapter2){
+        chapter2.innerHTML = "✓ Chapter 2";
+        chapter2.className = "chapter-line";
+        chapter2.onclick = goToChapter2;
+    }
 }
 
 function checkChoice1(){
@@ -402,6 +412,8 @@ panicVideo.onended = function(){
 waitVideo.onended = function(){
 
     showScene("sceneChapter2Intro");
+    unlocked.chapter2 = true;
+updateChapters();
 
     setTimeout(function(){
         showScene("sceneGrossWater");
@@ -490,6 +502,20 @@ function goToChoice1(){
 
     intro.pause();
     showScene("sceneChoice");
+}
+    function goToChapter2(){
+
+    menu.style.display = "none";
+    chapterMenu.style.display = "none";
+    homeButton.style.display = "none";
+
+    startMusic();
+
+    showScene("sceneGrossWater");
+
+    grossWaterVideo.currentTime = 0;
+    grossWaterVideo.play();
+
 }
 
 function goToOptionA1(){
