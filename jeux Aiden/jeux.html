@@ -2,83 +2,626 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Aiden - Game</title>
+<meta charset="UTF-8">
+<title>Aiden - Game</title>
 
-    <style>
-        /* ---------- GLOBAL LAYOUT ---------- */
+<style>
+html, body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:black;
+    font-family:monospace;
+}
 
-        html,
-        body{
-            margin:0;
-            padding:0;
-            width:100%;
-            height:100%;
-            overflow:hidden;
-            background:black;
-            font-family:monospace;
+.scene{
+    display:none;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+}
+
+.scene img,
+.scene video{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    background:black;
+}
+
+/* ---------- HOME MENU ---------- */
+
+#menu{
+    display:block;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:black;
+    color:white;
+    z-index:50;
+    overflow:hidden;
+}
+
+#homeGif{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:50;
+    pointer-events:none;
+}
+
+.menu-box{
+    position:absolute;
+    top:46%;
+    left:49%;
+    transform:translate(-50%, -50%);
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    width:180px;
+    z-index:60;
+    text-align:center;
+}
+
+.chapter-back{
+    background:black;
+    color:white;
+    border:1px solid white;
+    padding:10px 18px;
+    cursor:pointer;
+    font-family:monospace;
+    margin-top:25px;
+}
+
+.chapter-back:hover{
+    background:white;
+    color:black;
+}
+
+.menu-button{
+    background:none;
+    border:none;
+    color:black;
+    cursor:pointer;
+    font-family:monospace;
+    font-size:22px;
+    font-weight:bold;
+    padding:2px;
+}
+
+.menu-button:hover{
+    color:white;
+    text-shadow:0 0 6px white;
+}
+
+#helpButton, #homeButton{
+    position:absolute;
+    bottom:25px;
+    background:black;
+    color:white;
+    border:1px solid white;
+    padding:10px 18px;
+    cursor:pointer;
+    font-family:monospace;
+    z-index:100;
+}
+
+#helpButton{ left:25px; }
+
+#homeButton{
+    right:25px;
+    display:none;
+}
+
+#helpButton:hover, #homeButton:hover{
+    background:white;
+    color:black;
+}
+
+#helpBox{
+    display:none;
+    position:absolute;
+    bottom:70px;
+    left:25px;
+    width:320px;
+    padding:15px;
+    background:rgba(0,0,0,.9);
+    border:1px solid white;
+    color:white;
+    font-size:14px;
+    line-height:1.5;
+    z-index:100;
+}
+
+#chapterMenu{
+    display:none;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.94);
+    color:white;
+    z-index:70;
+}
+
+.chapter-box{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    width:360px;
+    font-size:18px;
+    line-height:1.8;
+}
+
+.chapter-title{
+    font-size:24px;
+    margin-bottom:20px;
+    text-align:center;
+}
+
+.chapter-line{ cursor:pointer; }
+.chapter-line:hover{ color:#00ff9c; }
+
+.locked{
+    color:#555;
+    cursor:not-allowed;
+}
+
+.option{
+    margin-left:25px;
+    cursor:pointer;
+}
+
+.option:hover{ color:#00ff9c; }
+
+.choice{
+    position:absolute;
+    cursor:pointer;
+}
+
+#choiceWindow{
+    left:5%;
+    bottom:5%;
+    width:35%;
+    height:30%;
+}
+
+#choiceDoor{
+    right:5%;
+    bottom:5%;
+    width:35%;
+    height:30%;
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" loop>
+    <source src="Ghost-Story(chosic.com).mp3" type="audio/mpeg">
+</audio>
+
+<div id="menu">
+
+    <img src="fond-home.gif" id="homeGif" alt="">
+
+    <div class="menu-box">
+        <button class="menu-button" onclick="startGame()">Start</button>
+        <button class="menu-button" onclick="openChapters()">Chapters</button>
+        <button class="menu-button" onclick="goFullscreen()">Fullscreen</button>
+    </div>
+
+</div>
+
+<button id="helpButton" onclick="toggleHelp()">Help</button>
+<button id="homeButton" onclick="goHome()">Home</button>
+
+<div id="helpBox">
+    If something breaks, reload the page.<br><br>
+    If the music or video does not start, press Start again or refresh the page.<br><br>
+    Press ESC to leave fullscreen.
+</div>
+
+<div id="chapterMenu">
+    <div class="chapter-box">
+        <div class="chapter-title">Chapters</div>
+
+        <div class="chapter-line" onclick="goToChoice1()">✓ Chapter 1</div>
+
+        <div id="optionA1" class="option" onclick="goToOptionA1()">├─ □ Option A1</div>
+        <div id="optionB1" class="option" onclick="goToOptionB1()">└─ □ Option B1</div>
+
+        <br>
+
+        <div id="chapter2Line" class="locked">🔒 Chapter 2</div>
+        <div class="locked">🔒 Chapter 3</div>
+        <div class="locked">🔒 Chapter 4</div>
+
+        <br>
+
+
+    </div>
+</div>
+
+<div class="scene" id="sceneVideo">
+    <video id="intro" playsinline>
+        <source src="scene1 jeux.mp4" type="video/mp4">
+    </video>
+</div>
+
+<div class="scene" id="sceneChoice">
+    <img src="choix1scene1jeux.jpg">
+    <div id="choiceWindow" class="choice"></div>
+    <div id="choiceDoor" class="choice"></div>
+</div>
+
+<div class="scene" id="sceneWindow">
+
+    <video id="windowVideo" playsinline>
+        <source src="B1-window.mp4" type="video/mp4">
+    </video>
+
+</div>
+
+<div class="scene" id="sceneDoor">
+
+    <video id="doorVideo" playsinline>
+        <source src="B2-door.mp4" type="video/mp4">
+    </video>
+
+</div>
+    <div class="scene" id="scenePanic">
+
+    <video id="panicVideo" playsinline>
+        <source src="panique.mp4" type="video/mp4">
+    </video>
+
+</div>
+
+<div class="scene" id="sceneWait">
+
+    <video id="waitVideo" playsinline>
+        <source src="attendre.mp4" type="video/mp4">
+    </video>
+
+</div>
+    <div class="scene" id="sceneChapter2Intro">
+    <div style="color:white; font-size:42px; text-align:center; margin-top:45vh;">
+        Chapter 2
+    </div>
+</div>
+
+<div class="scene" id="sceneGrossWater">
+
+    <video id="grossWaterVideo" playsinline>
+        <source src="gross-water.mp4" type="video/mp4">
+    </video>
+
+</div>
+    <div class="scene" id="sceneBadDream">
+
+    <video id="badDreamVideo" playsinline>
+        <source src="badream1.mp4" type="video/mp4">
+    </video>
+
+</div>
+
+<div class="scene" id="sceneWakeUp">
+
+    <video id="wakeUpVideo" playsinline>
+        <source src="wake-up.mp4" type="video/mp4">
+    </video>
+
+</div>
+
+<script>
+const menu = document.getElementById("menu");
+const chapterMenu = document.getElementById("chapterMenu");
+const intro = document.getElementById("intro");
+const music = document.getElementById("music");
+
+const windowVideo = document.getElementById("windowVideo");
+const doorVideo = document.getElementById("doorVideo");
+const panicVideo = document.getElementById("panicVideo");
+const waitVideo = document.getElementById("waitVideo");
+const grossWaterVideo = document.getElementById("grossWaterVideo");
+const badDreamVideo = document.getElementById("badDreamVideo");
+const wakeUpVideo = document.getElementById("wakeUpVideo");
+
+const homeButton = document.getElementById("homeButton");
+
+let unlocked = {
+    optionA1:false,
+    optionB1:false,
+    chapter2:false
+};
+
+let watched = {
+    window:false,
+    door:false
+};
+
+function showScene(id){
+    document.querySelectorAll(".scene").forEach(scene => {
+        scene.style.display = "none";
+    });
+
+    document.getElementById(id).style.display = "block";
+}
+
+function updateChapters(){
+
+    document.getElementById("optionA1").innerText =
+        unlocked.optionA1 ? "├─ ■ Option A1" : "├─ □ Option A1";
+
+    document.getElementById("optionB1").innerText =
+        unlocked.optionB1 ? "└─ ■ Option B1" : "└─ □ Option B1";
+
+    const chapter2 = document.getElementById("chapter2Line");
+
+    if(unlocked.chapter2){
+        chapter2.innerHTML = "✓ Chapter 2";
+        chapter2.className = "chapter-line";
+        chapter2.onclick = goToChapter2;
+    }
+}
+
+function checkChoice1(){
+    if(watched.window && watched.door){
+
+        showScene("scenePanic");
+
+        panicVideo.currentTime = 0;
+        panicVideo.play();
+
+    }else{
+
+        showScene("sceneChoice");
+
+    }
+}
+
+windowVideo.onended = function(){
+    watched.window = true;
+    checkChoice1();
+};
+
+doorVideo.onended = function(){
+    watched.door = true;
+    checkChoice1();
+};
+
+panicVideo.onended = function(){
+    showScene("sceneWait");
+
+    waitVideo.currentTime = 0;
+    waitVideo.play();
+};
+
+waitVideo.onended = function(){
+
+    showScene("sceneChapter2Intro");
+    unlocked.chapter2 = true;
+updateChapters();
+
+    setTimeout(function(){
+        showScene("sceneGrossWater");
+
+        grossWaterVideo.currentTime = 0;
+        grossWaterVideo.play();
+
+    }, 2500);
+
+};
+
+    grossWaterVideo.onended = function(){
+
+    showScene("sceneBadDream");
+
+    badDreamVideo.currentTime = 0;
+    badDreamVideo.play();
+
+};
+
+badDreamVideo.onended = function(){
+
+    showScene("sceneWakeUp");
+
+    wakeUpVideo.currentTime = 0;
+    wakeUpVideo.play();
+
+};
+
+wakeUpVideo.onended = function(){
+
+    showScene("sceneChoice2");
+
+};
+
+function startMusic(){
+    music.volume = 0;
+    music.play();
+
+    let volume = 0;
+
+    const fade = setInterval(() => {
+        volume += 0.02;
+        music.volume = Math.min(volume, 0.35);
+
+        if(volume >= 0.35){
+            clearInterval(fade);
         }
+    }, 100);
+}
 
-        .scene{
-            display:none;
-            position:absolute;
-            top:0;
-            left:0;
-            width:100%;
-            height:100%;
-        }
+function startGame(){
+    menu.style.display = "none";
+    chapterMenu.style.display = "none";
+    homeButton.style.display = "none";
 
-        .scene img,
-        .scene video{
-            width:100%;
-            height:100%;
-            object-fit:contain;
-            background:black;
-        }
+    showScene("sceneVideo");
 
-        /* ---------- HOME MENU ---------- */
+    startMusic();
 
-        #menu{
-            display:block;
-            position:absolute;
-            top:0;
-            left:0;
-            width:100%;
-            height:100%;
-            background:black;
-            color:white;
-            z-index:50;
-            overflow:hidden;
-        }
+    intro.currentTime = 0;
+    intro.play();
+}
 
-        #homeGif{
-            position:absolute;
-            top:0;
-            left:0;
-            width:100%;
-            height:100%;
-            object-fit:cover;
-            z-index:50;
-            pointer-events:none;
-        }
+intro.onended = function(){
+    showScene("sceneChoice");
+};
 
-        .menu-box{
-            position:absolute;
-            top:46%;
-            left:49%;
-            transform:translate(-50%, -50%);
-            display:flex;
-            flex-direction:column;
-            gap:4px;
-            width:180px;
-            z-index:60;
-            text-align:center;
-        }
+function openChapters(){
+    updateChapters();
+    chapterMenu.style.display = "block";
+    homeButton.style.display = "block";
+}
 
-        .chapter-back{
-            background:black;
-            color:white;
-            border:1px solid white;
-            padding:10px 18px;
-            cursor:pointer;
-            font-family:
+function closeChapters(){
+    chapterMenu.style.display = "none";
+    homeButton.style.display = "none";
+}
+
+function goToChoice1(){
+    menu.style.display = "none";
+    chapterMenu.style.display = "none";
+    homeButton.style.display = "none";
+
+    startMusic();
+
+    intro.pause();
+    showScene("sceneChoice");
+}
+    function goToChapter2(){
+
+    menu.style.display = "none";
+    chapterMenu.style.display = "none";
+    homeButton.style.display = "none";
+
+    startMusic();
+
+    showScene("sceneGrossWater");
+
+    grossWaterVideo.currentTime = 0;
+    grossWaterVideo.play();
+
+}
+
+function goToOptionA1(){
+    if(!unlocked.optionA1) return;
+
+    menu.style.display = "none";
+    chapterMenu.style.display = "none";
+
+    showScene("sceneWindow");
+
+    windowVideo.currentTime = 0;
+    windowVideo.play();
+
+    homeButton.style.display = "block";
+}
+
+function goToOptionB1(){
+    if(!unlocked.optionB1) return;
+
+    menu.style.display = "none";
+    chapterMenu.style.display = "none";
+
+    showScene("sceneDoor");
+
+    doorVideo.currentTime = 0;
+    doorVideo.play();
+
+    homeButton.style.display = "block";
+}
+
+function goFullscreen(){
+    const page = document.documentElement;
+
+    if(page.requestFullscreen){
+        page.requestFullscreen();
+    }
+}
+
+function toggleHelp(){
+    const helpBox = document.getElementById("helpBox");
+
+    helpBox.style.display = helpBox.style.display === "block" ? "none" : "block";
+}
+
+document.getElementById("choiceWindow").onclick = function(){
+    unlocked.optionA1 = true;
+    updateChapters();
+
+    showScene("sceneWindow");
+
+    windowVideo.currentTime = 0;
+    windowVideo.play();
+
+    homeButton.style.display = "block";
+};
+
+document.getElementById("choiceDoor").onclick = function(){
+    unlocked.optionB1 = true;
+    updateChapters();
+
+    showScene("sceneDoor");
+
+    doorVideo.currentTime = 0;
+    doorVideo.play();
+
+    homeButton.style.display = "block";
+};
+
+function goHome(){
+    document.querySelectorAll(".scene").forEach(scene => {
+        scene.style.display = "none";
+    });
+
+    menu.style.display = "block";
+    chapterMenu.style.display = "none";
+
+    intro.pause();
+    intro.currentTime = 0;
+
+    windowVideo.pause();
+    windowVideo.currentTime = 0;
+
+    doorVideo.pause();
+    doorVideo.currentTime = 0;
+
+    panicVideo.pause();
+    panicVideo.currentTime = 0;
+
+    waitVideo.pause();
+    waitVideo.currentTime = 0;
+
+    grossWaterVideo.pause();
+    grossWaterVideo.currentTime = 0;
+
+    badDreamVideo.pause();
+    badDreamVideo.currentTime = 0;
+
+    wakeUpVideo.pause();
+    wakeUpVideo.currentTime = 0;
+
+    music.pause();
+    music.currentTime = 0;
+
+    homeButton.style.display = "none";
+}
+</script>
+
+</body>
+</html>
