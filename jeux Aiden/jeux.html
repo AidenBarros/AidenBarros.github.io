@@ -309,6 +309,21 @@ html, body{
     </video>
 
 </div>
+    <div class="scene" id="sceneBadDream">
+
+    <video id="badDreamVideo" playsinline>
+        <source src="badream1.mp4" type="video/mp4">
+    </video>
+
+</div>
+
+<div class="scene" id="sceneWakeUp">
+
+    <video id="wakeUpVideo" playsinline>
+        <source src="wake-up.mp4" type="video/mp4">
+    </video>
+
+</div>
 
 <script>
 const menu = document.getElementById("menu");
@@ -321,6 +336,8 @@ const doorVideo = document.getElementById("doorVideo");
 const panicVideo = document.getElementById("panicVideo");
 const waitVideo = document.getElementById("waitVideo");
 const grossWaterVideo = document.getElementById("grossWaterVideo");
+const badDreamVideo = document.getElementById("badDreamVideo");
+const wakeUpVideo = document.getElementById("wakeUpVideo");
 
 const homeButton = document.getElementById("homeButton");
 
@@ -393,6 +410,30 @@ waitVideo.onended = function(){
         grossWaterVideo.play();
 
     }, 2500);
+
+};
+
+    grossWaterVideo.onended = function(){
+
+    showScene("sceneBadDream");
+
+    badDreamVideo.currentTime = 0;
+    badDreamVideo.play();
+
+};
+
+badDreamVideo.onended = function(){
+
+    showScene("sceneWakeUp");
+
+    wakeUpVideo.currentTime = 0;
+    wakeUpVideo.play();
+
+};
+
+wakeUpVideo.onended = function(){
+
+    showScene("sceneChoice2");
 
 };
 
@@ -542,6 +583,12 @@ function goHome(){
 
     grossWaterVideo.pause();
     grossWaterVideo.currentTime = 0;
+
+    badDreamVideo.pause();
+    badDreamVideo.currentTime = 0;
+
+    wakeUpVideo.pause();
+    wakeUpVideo.currentTime = 0;
 
     music.pause();
     music.currentTime = 0;
