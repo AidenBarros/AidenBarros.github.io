@@ -237,16 +237,16 @@ html, body{
     <div class="chapter-box">
         <div class="chapter-title">Chapters</div>
 
-        <div class="chapter-line" onclick="goToChoice1()">✓ Choice 1</div>
+        <div class="chapter-line" onclick="goToChoice1()">✓ Chapter 1</div>
 
         <div id="optionA1" class="option" onclick="goToOptionA1()">├─ □ Option A1</div>
         <div id="optionB1" class="option" onclick="goToOptionB1()">└─ □ Option B1</div>
 
         <br>
 
-        <div class="locked">🔒 Choice 2</div>
-        <div class="locked">🔒 Choice 3</div>
-        <div class="locked">🔒 Choice 4</div>
+        <div class="locked">🔒 Chapter 2</div>
+        <div class="locked">🔒 Chapter 3</div>
+        <div class="locked">🔒 Chapter 4</div>
 
         <br>
 
@@ -296,6 +296,19 @@ html, body{
     </video>
 
 </div>
+    <div class="scene" id="sceneChapter2Intro">
+    <div style="color:white; font-size:42px; text-align:center; margin-top:45vh;">
+        Chapter 2
+    </div>
+</div>
+
+<div class="scene" id="sceneGrossWater">
+
+    <video id="grossWaterVideo" playsinline>
+        <source src="gross-water.mp4" type="video/mp4">
+    </video>
+
+</div>
 
 <script>
 const menu = document.getElementById("menu");
@@ -307,6 +320,7 @@ const windowVideo = document.getElementById("windowVideo");
 const doorVideo = document.getElementById("doorVideo");
 const panicVideo = document.getElementById("panicVideo");
 const waitVideo = document.getElementById("waitVideo");
+const grossWaterVideo = document.getElementById("grossWaterVideo");
 
 const homeButton = document.getElementById("homeButton");
 
@@ -369,7 +383,17 @@ panicVideo.onended = function(){
 };
 
 waitVideo.onended = function(){
-    showScene("sceneChoice2");
+
+    showScene("sceneChapter2Intro");
+
+    setTimeout(function(){
+        showScene("sceneGrossWater");
+
+        grossWaterVideo.currentTime = 0;
+        grossWaterVideo.play();
+
+    }, 2500);
+
 };
 
 function startMusic(){
@@ -515,6 +539,9 @@ function goHome(){
 
     waitVideo.pause();
     waitVideo.currentTime = 0;
+
+    grossWaterVideo.pause();
+    grossWaterVideo.currentTime = 0;
 
     music.pause();
     music.currentTime = 0;
