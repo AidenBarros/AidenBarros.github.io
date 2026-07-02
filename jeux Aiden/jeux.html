@@ -216,11 +216,12 @@ html, body{
 
     <img src="fond-home.gif" id="homeGif" alt="">
 
-    <div class="menu-box">
-        <button class="menu-button" onclick="startGame()">Start</button>
-        <button class="menu-button" onclick="openChapters()">Chapters</button>
-        <button class="menu-button" onclick="goFullscreen()">Fullscreen</button>
-    </div>
+   <div class="menu-box">
+    <button class="menu-button" onclick="startGame()">Start</button>
+    <button class="menu-button" onclick="openChapters()">Chapters</button>
+    <button class="menu-button" onclick="openCinematics()">Cinematics</button>
+    <button class="menu-button" onclick="goFullscreen()">Fullscreen</button>
+</div>
 
 </div>
 
@@ -584,10 +585,17 @@ document.getElementById("choiceDoor").onclick = function(){
     homeButton.style.display = "block";
 };
 
+
+    function openCinematics(){
+    // Empty for now
+}
+
 function goHome(){
     document.querySelectorAll(".scene").forEach(scene => {
         scene.style.display = "none";
     });
+
+}
 
     menu.style.display = "block";
     chapterMenu.style.display = "none";
