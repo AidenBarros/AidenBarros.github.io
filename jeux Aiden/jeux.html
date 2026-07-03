@@ -203,6 +203,19 @@ html, body{
     width:35%;
     height:30%;
 }
+    #choiceMirror{
+    left:5%;
+    bottom:5%;
+    width:35%;
+    height:30%;
+}
+
+#choiceClope{
+    right:5%;
+    bottom:5%;
+    width:35%;
+    height:30%;
+}
 </style>
 </head>
 
@@ -328,6 +341,25 @@ html, body{
 
 </div>
 
+<div class="scene" id="sceneChoice2">
+    <img src="miroir-clope.jpg">
+
+    <div id="choiceMirror" class="choice"></div>
+    <div id="choiceClope" class="choice"></div>
+</div>
+
+<div class="scene" id="sceneMirror">
+    <video id="mirrorVideo" playsinline>
+        <source src="miroir.mp4" type="video/mp4">
+    </video>
+</div>
+
+<div class="scene" id="sceneClope">
+    <video id="clopeVideo" playsinline>
+        <source src="clope-w-M.mp4" type="video/mp4">
+    </video>
+</div>    
+
 <script>
 const menu = document.getElementById("menu");
 const chapterMenu = document.getElementById("chapterMenu");
@@ -341,6 +373,8 @@ const waitVideo = document.getElementById("waitVideo");
 const grossWaterVideo = document.getElementById("grossWaterVideo");
 const badDreamVideo = document.getElementById("badDreamVideo");
 const wakeUpVideo = document.getElementById("wakeUpVideo");
+const mirrorVideo = document.getElementById("mirrorVideo");
+const clopeVideo = document.getElementById("clopeVideo"); 
 
 const homeButton = document.getElementById("homeButton");
 
@@ -586,6 +620,23 @@ document.getElementById("choiceDoor").onclick = function(){
 
     homeButton.style.display = "block";
 };
+    document.getElementById("choiceMirror").onclick = function(){
+
+    showScene("sceneMirror");
+
+    mirrorVideo.currentTime = 0;
+    mirrorVideo.play();
+
+};
+
+document.getElementById("choiceClope").onclick = function(){
+
+    showScene("sceneClope");
+
+    clopeVideo.currentTime = 0;
+    clopeVideo.play();
+
+};
 
 
     function openCinematics(){
@@ -623,6 +674,12 @@ function goHome(){
 
     wakeUpVideo.pause();
     wakeUpVideo.currentTime = 0;
+
+    mirrorVideo.pause();
+    mirrorVideo.currentTime = 0;
+
+    clopeVideo.pause();
+    clopeVideo.currentTime = 0;
 
     music.pause();
     music.currentTime = 0;
