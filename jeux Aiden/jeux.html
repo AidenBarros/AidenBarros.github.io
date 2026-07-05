@@ -385,7 +385,9 @@ const homeButton = document.getElementById("homeButton");
 let unlocked = {
     optionA1:false,
     optionB1:false,
-    chapter2:false
+    chapter2:false,
+    optionA2:false,
+    optionB2:false
 };
 
 let watched = {
@@ -411,13 +413,19 @@ function updateChapters(){
 
     const chapter2 = document.getElementById("chapter2Line");
 
-    if(unlocked.chapter2){
+      if(unlocked.chapter2){
         chapter2.innerHTML = "✓ Chapter 2";
         chapter2.className = "chapter-line";
         chapter2.onclick = goToChapter2;
     }
-}
 
+    document.getElementById("optionMirror").innerText =
+        unlocked.optionA2 ? "├─ ■ Option A2" : "├─ □ Option A2";
+
+    document.getElementById("optionClope").innerText =
+        unlocked.optionB2 ? "└─ ■ Option B2" : "└─ □ Option B2";
+}
+    
 function checkChoice1(){
     if(watched.window && watched.door){
 
@@ -558,6 +566,33 @@ function goToChoice1(){
     grossWaterVideo.play();
 
 }
+    function goToClope(){
+
+    if(!unlocked.optionA2) return;
+
+    menu.style.display = "none";
+    chapterMenu.style.display = "none";
+
+    showScene("sceneClope");
+
+    clopeVideo.currentTime = 0;
+    clopeVideo.play();
+
+}
+
+function goToMirror(){
+
+    if(!unlocked.optionB2) return;
+
+    menu.style.display = "none";
+    chapterMenu.style.display = "none";
+
+    showScene("sceneMirror");
+
+    mirrorVideo.currentTime = 0;
+    mirrorVideo.play();
+
+}
 
 function goToOptionA1(){
     if(!unlocked.optionA1) return;
@@ -626,6 +661,9 @@ document.getElementById("choiceDoor").onclick = function(){
 };
     document.getElementById("choiceMirror").onclick = function(){
 
+    unlocked.optionB2 = true;
+    updateChapters();
+
     showScene("sceneMirror");
 
     mirrorVideo.currentTime = 0;
@@ -634,6 +672,9 @@ document.getElementById("choiceDoor").onclick = function(){
 };
 
 document.getElementById("choiceClope").onclick = function(){
+
+    unlocked.optionA2 = true;
+    updateChapters();
 
     showScene("sceneClope");
 
