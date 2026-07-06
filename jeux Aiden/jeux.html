@@ -3,7 +3,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Aiden - Game</title>
+<title>Monday</title>
 
 <style>
 html, body{
@@ -203,6 +203,19 @@ html, body{
     width:35%;
     height:30%;
 }
+    #choiceMirror{
+    left:5%;
+    bottom:5%;
+    width:35%;
+    height:30%;
+}
+
+#choiceClope{
+    right:5%;
+    bottom:5%;
+    width:35%;
+    height:30%;
+}
 </style>
 </head>
 
@@ -248,6 +261,10 @@ html, body{
         <br>
 
         <div id="chapter2Line" class="locked">🔒 Chapter 2</div>
+
+        <div id="optionMirror" class="option" onclick="goToClope()">├─ □ Option A2</div>
+        <div id="optionClope" class="option" onclick="goToMirror()">└─ □ Option B2</div>
+        
         <div class="locked">🔒 Chapter 3</div>
         <div class="locked">🔒 Chapter 4</div>
 
@@ -328,6 +345,25 @@ html, body{
 
 </div>
 
+<div class="scene" id="sceneChoice2">
+    <img src="miroir-clope.jpg">
+
+    <div id="choiceMirror" class="choice"></div>
+    <div id="choiceClope" class="choice"></div>
+</div>
+
+<div class="scene" id="sceneMirror">
+    <video id="mirrorVideo" playsinline>
+        <source src="miroir.mp4" type="video/mp4">
+    </video>
+</div>
+
+<div class="scene" id="sceneClope">
+    <video id="clopeVideo" playsinline>
+        <source src="clope-w-M.mp4" type="video/mp4">
+    </video>
+</div>    
+
 <script>
 const menu = document.getElementById("menu");
 const chapterMenu = document.getElementById("chapterMenu");
@@ -341,13 +377,17 @@ const waitVideo = document.getElementById("waitVideo");
 const grossWaterVideo = document.getElementById("grossWaterVideo");
 const badDreamVideo = document.getElementById("badDreamVideo");
 const wakeUpVideo = document.getElementById("wakeUpVideo");
+const mirrorVideo = document.getElementById("mirrorVideo");
+const clopeVideo = document.getElementById("clopeVideo"); 
 
 const homeButton = document.getElementById("homeButton");
 
 let unlocked = {
     optionA1:false,
     optionB1:false,
-    chapter2:false
+    chapter2:false,
+    optionA2:false,
+    optionB2:false
 };
 
 let watched = {
@@ -373,13 +413,19 @@ function updateChapters(){
 
     const chapter2 = document.getElementById("chapter2Line");
 
-    if(unlocked.chapter2){
+      if(unlocked.chapter2){
         chapter2.innerHTML = "✓ Chapter 2";
         chapter2.className = "chapter-line";
         chapter2.onclick = goToChapter2;
     }
-}
 
+    document.getElementById("optionMirror").innerText =
+        unlocked.optionA2 ? "├─ ■ Option A2" : "├─ □ Option A2";
+
+    document.getElementById("optionClope").innerText =
+        unlocked.optionB2 ? "└─ ■ Option B2" : "└─ □ Option B2";
+}
+    
 function checkChoice1(){
     if(watched.window && watched.door){
 
@@ -520,6 +566,33 @@ function goToChoice1(){
     grossWaterVideo.play();
 
 }
+    function goToClope(){
+
+    if(!unlocked.optionA2) return;
+
+    menu.style.display = "none";
+    chapterMenu.style.display = "none";
+
+    showScene("sceneClope");
+
+    clopeVideo.currentTime = 0;
+    clopeVideo.play();
+
+}
+
+function goToMirror(){
+
+    if(!unlocked.optionB2) return;
+
+    menu.style.display = "none";
+    chapterMenu.style.display = "none";
+
+    showScene("sceneMirror");
+
+    mirrorVideo.currentTime = 0;
+    mirrorVideo.play();
+
+}
 
 function goToOptionA1(){
     if(!unlocked.optionA1) return;
@@ -586,6 +659,29 @@ document.getElementById("choiceDoor").onclick = function(){
 
     homeButton.style.display = "block";
 };
+    document.getElementById("choiceMirror").onclick = function(){
+
+    unlocked.optionB2 = true;
+    updateChapters();
+
+    showScene("sceneMirror");
+
+    mirrorVideo.currentTime = 0;
+    mirrorVideo.play();
+
+};
+
+document.getElementById("choiceClope").onclick = function(){
+
+    unlocked.optionA2 = true;
+    updateChapters();
+
+    showScene("sceneClope");
+
+    clopeVideo.currentTime = 0;
+    clopeVideo.play();
+
+};
 
 
     function openCinematics(){
@@ -623,6 +719,12 @@ function goHome(){
 
     wakeUpVideo.pause();
     wakeUpVideo.currentTime = 0;
+
+    mirrorVideo.pause();
+    mirrorVideo.currentTime = 0;
+
+    clopeVideo.pause();
+    clopeVideo.currentTime = 0;
 
     music.pause();
     music.currentTime = 0;
