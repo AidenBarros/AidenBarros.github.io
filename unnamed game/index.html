@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Unnamed</title>
+
+<style>
+html, body{
+    margin:0;
+    width:100%;
+    height:100%;
+    background:black;
+    overflow:hidden;
+}
+
+.scene{
+    position:absolute;
+    inset:0;
+    display:none;
+}
+
+#introScene{
+    display:block;
+}
+
+/* intro */
+.scene video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* interface */
+#interfaceScene img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+/* zones menu */
+.click-zone{
+    position:absolute;
+    cursor:pointer;
+    z-index:5;
+}
+
+#startZone{ left:42%; top:38%; width:16%; height:8%; }
+#fullscreenZone{ left:39%; top:50%; width:22%; height:8%; }
+#quitZone{ left:43%; top:62%; width:14%; height:8%; }
+#helpZone{ left:1%; bottom:3%; width:18%; height:8%; }
+
+#helpBox{
+    display:none;
+    position:absolute;
+    left:30px;
+    bottom:90px;
+    width:340px;
+    padding:18px;
+    border:1px solid white;
+    background:rgba(0,0,0,0.9);
+    color:white;
+    font-family:serif;
+    font-size:20px;
+    z-index:10;
+}
+
+/* création personnage */
+#createScene{
+    background:black;
+}
+
+#BG1{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+#encadre{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    pointer-events:none;
+}
+
+/* bouton quit sur l'encadré */
+#createQuitZone{
+    right:31%;
+    top:8%;
+    width:9%;
+    height:7%;
+}
+
+/* bouton good! */
+#createGoodZone{
+    right:9%;
+    bottom:16%;
+    width:13%;
+    height:8%;
+}
+
+/* texte dans l'encadré */
+#createText{
+    position:absolute;
+    right:10%;
+    top:18%;
+    width:35%;
+    height:55%;
+    color:black;
+    font-family:serif;
+    font-size:28px;
+    line-height:1.4;
+    z-index:4;
+}
+</style>
+</head>
+
+<body>
+
+<div class="scene" id="introScene">
+    <video id="introVideo" autoplay muted playsinline>
+        <source src="intro/intro.video.mp4" type="video/mp4">
+    </video>
+</div>
+
+<div class="scene" id="interfaceScene">
+    <img src="intro/interface.png" alt="interface">
+
+    <div id="startZone" class="click-zone"></div>
+    <div id="fullscreenZone" class="click-zone"></div>
+    <div id="quitZone" class="click-zone"></div>
+    <div id="helpZone" class="click-zone"></div>
+
+    <div id="helpBox">
+        Create someone.<br>
+        Change them.<br>
+        See what happens.
+    </div>
+</div>
+
+<div class="scene" id="createScene">
+
+    <img id="BG1" src="backg/BG1.png" alt="background">
+
+    <img id="encadre" src="encadré & texte/encadre.png" alt="encadre">
+
+    <div id="createText">
+        Let's start with the basics.
+    </div>
+
+    <div id="createQuitZone" class="click-zone"></div>
+    <div id="createGoodZone" class="click-zone"></div>
+
+</div>
+
+<script>
+const introVideo = document.getElementById("introVideo");
+
+const introScene = document.getElementById("introScene");
+const interfaceScene = document.getElementById("interfaceScene");
+const createScene = document.getElementById("createScene");
+
+const startZone = document.getElementById("startZone");
+const fullscreenZone = document.getElementById("fullscreenZone");
+const quitZone = document.getElementById("quitZone");
+const helpZone = document.getElementById("helpZone");
+const helpBox = document.getElementById("helpBox");
+
+const createQuitZone = document.getElementById("createQuitZone");
+const createGoodZone = document.getElementById("createGoodZone");
+const createText = document.getElementById("createText");
+
+let textStep = 0;
+
+const createTexts = [
+    "Let's start with the basics.",
+    "Choose a body.",
+    "Then a face.",
+    "Then we can give them something to wear."
+];
+
+function showScene(scene){
+    introScene.style.display = "none";
+    interfaceScene.style.display = "none";
+    createScene.style.display = "none";
+
+    scene.style.display = "block";
+}
+
+function showInterface(){
+    showScene(interfaceScene);
+}
+
+introVideo.onended = function(){
+    showInterface();
+};
+
+introVideo.onerror = function(){
+    showInterface();
+};
+
+startZone.onclick = function(){
+    textStep = 0;
+    createText.innerHTML = createTexts[textStep];
+    showScene(createScene);
+};
+
+fullscreenZone.onclick = function(){
+    document.documentElement.requestFullscreen();
+};
+
+quitZone.onclick = function(){
+    window.close();
+};
+
+helpZone.onclick = function(){
+    helpBox.style.display = helpBox.style.display === "block" ? "none" : "block";
+};
+
+createQuitZone.onclick = function(){
+    showInterface();
+};
+
+createGoodZone.onclick = function(){
+    textStep++;
+
+    if(textStep < createTexts.length){
+        createText.innerHTML = createTexts[textStep];
+    }else{
+        createText.innerHTML = "Now choose.";
+    }
+};
+</script>
+
+</body>
+</html>

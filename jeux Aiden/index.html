@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Unnamed</title>
+
+<style>
+html, body{
+    margin:0;
+    width:100%;
+    height:100%;
+    background:black;
+    overflow:hidden;
+}
+
+.scene{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    display:none;
+}
+
+.scene img,
+.scene video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+#introScene{
+    display:block;
+}
+
+.click-zone{
+    position:absolute;
+    cursor:pointer;
+    z-index:5;
+}
+
+#startZone{
+    left:42%;
+    top:38%;
+    width:16%;
+    height:8%;
+}
+
+#fullscreenZone{
+    left:39%;
+    top:50%;
+    width:22%;
+    height:8%;
+}
+
+#quitZone{
+    left:43%;
+    top:62%;
+    width:14%;
+    height:8%;
+}
+
+#helpZone{
+    left:1%;
+    bottom:3%;
+    width:18%;
+    height:8%;
+}
+
+#helpBox{
+    display:none;
+    position:absolute;
+    left:30px;
+    bottom:90px;
+    width:340px;
+    padding:18px;
+    border:1px solid white;
+    background:rgba(0,0,0,0.9);
+    color:white;
+    font-family:serif;
+    font-size:20px;
+    z-index:10;
+}
+</style>
+</head>
+
+<body>
+
+<div class="scene" id="introScene">
+    <video id="introVideo" autoplay muted playsinline>
+        <source src="intro.video.mp4" type="video/mp4">
+    </video>
+</div>
+
+<div class="scene" id="interfaceScene">
+    <img src="interface.png" alt="interface">
+
+    <div id="startZone" class="click-zone"></div>
+    <div id="fullscreenZone" class="click-zone"></div>
+    <div id="quitZone" class="click-zone"></div>
+    <div id="helpZone" class="click-zone"></div>
+
+    <div id="helpBox">
+        Create someone.<br>
+        Change them.<br>
+        See what happens.
+    </div>
+</div>
+
+<script>
+const introVideo = document.getElementById("introVideo");
+const introScene = document.getElementById("introScene");
+const interfaceScene = document.getElementById("interfaceScene");
+
+const startZone = document.getElementById("startZone");
+const fullscreenZone = document.getElementById("fullscreenZone");
+const quitZone = document.getElementById("quitZone");
+const helpZone = document.getElementById("helpZone");
+const helpBox = document.getElementById("helpBox");
+
+function showInterface(){
+    introScene.style.display = "none";
+    interfaceScene.style.display = "block";
+}
+
+introVideo.onended = function(){
+    showInterface();
+};
+
+introVideo.onerror = function(){
+    showInterface();
+};
+
+startZone.onclick = function(){
+    // Ici on mettra le lancement du jeu plus tard
+};
+
+fullscreenZone.onclick = function(){
+    document.documentElement.requestFullscreen();
+};
+
+quitZone.onclick = function(){
+    window.close();
+};
+
+helpZone.onclick = function(){
+    if(helpBox.style.display === "block"){
+        helpBox.style.display = "none";
+    }else{
+        helpBox.style.display = "block";
+    }
+};
+</script>
+
+</body>
+</html>
