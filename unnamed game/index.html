@@ -107,10 +107,16 @@ html, body{
 }
 
 #createGoodZone{
-    right:17%;
-    bottom:14%;
-    width:13%;
-    height:8%;
+    position:absolute;
+
+    right:18.5%;
+    bottom:18.5%;
+
+    width:10%;
+    height:5.5%;
+
+    z-index:20;
+    cursor:pointer;
 }
 </style>
 </head>
@@ -192,8 +198,18 @@ introVideo.onerror = function(){
     showInterface();
 };
 
-startZone.onclick = function(){
+startZone.onclick = async function(){
+
+    if (!document.fullscreenElement){
+        try{
+            await document.documentElement.requestFullscreen();
+        }catch(err){
+            console.log("Fullscreen refused.");
+        }
+    }
+
     showScene(createScene);
+
 };
 
 fullscreenZone.onclick = function(){
