@@ -76,7 +76,8 @@ html, body{
     z-index:1;
 }
 
-#encadre{
+/* corps choisi, par-dessus le fond */
+#bodyLayer{
     position:absolute;
     inset:0;
     width:100%;
@@ -84,6 +85,16 @@ html, body{
     object-fit:contain;
     pointer-events:none;
     z-index:2;
+}
+
+#encadre{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    pointer-events:none;
+    z-index:5;
 }
 
 #createText{
@@ -100,7 +111,7 @@ html, body{
     z-index:10;
 }
 
-    #bodyChoice{
+#bodyChoice{
     position:absolute;
     right:13.5%;
     top:24.5%;
@@ -114,13 +125,13 @@ html, body{
     display:block;
 }
 
-/* Zones de clic */
-
+/* zones de clic body */
 #body1Zone{
     right:36.2%;
     top:32%;
     width:6%;
     height:35%;
+    display:none;
 }
 
 #body2Zone{
@@ -128,6 +139,7 @@ html, body{
     top:32%;
     width:6%;
     height:35%;
+    display:none;
 }
 
 #body3Zone{
@@ -135,6 +147,7 @@ html, body{
     top:32%;
     width:6%;
     height:35%;
+    display:none;
 }
 
 #createQuitZone{
@@ -150,7 +163,6 @@ html, body{
     width:9.5%;
     height:5.8%;
 }
-    
 </style>
 </head>
 
@@ -181,21 +193,25 @@ html, body{
 
     <img id="BG1" src="backg/BG1.png" alt="background">
 
+    <img id="bodyLayer" src="" alt="">
+
     <img id="encadre" src="encadré & texte/encadre.png" alt="encadre">
 
     <div id="createText">
-    </p>Hey you! So, who are you</p> 
-    </p>going to create today?</p>
-    </p>Let's start with something</p>
-    </p>simple...Choose your body-base !!
+        <p>Hey you! So, who are you</p>
+        <p>going to create today?</p>
+        <p>Let's start with something</p>
+        <p>simple... Choose your body-base!!</p>
     </div>
-<div id="bodyChoice">
-    <img src="choix/body.png" alt="Body Choice">
-</div>
 
-<div id="body1Zone" class="click-zone"></div>
-<div id="body2Zone" class="click-zone"></div>
-<div id="body3Zone" class="click-zone"></div>
+    <div id="bodyChoice">
+        <img src="choix/body.png" alt="Body Choice">
+    </div>
+
+    <div id="body1Zone" class="click-zone"></div>
+    <div id="body2Zone" class="click-zone"></div>
+    <div id="body3Zone" class="click-zone"></div>
+
     <div id="createQuitZone" class="click-zone"></div>
     <div id="createGoodZone" class="click-zone"></div>
 
@@ -213,15 +229,14 @@ const fullscreenZone = document.getElementById("fullscreenZone");
 const quitZone = document.getElementById("quitZone");
 const helpZone = document.getElementById("helpZone");
 const helpBox = document.getElementById("helpBox");
-    
+
 const createText = document.getElementById("createText");
 const bodyChoice = document.getElementById("bodyChoice");
+const bodyLayer = document.getElementById("bodyLayer");
 
 const body1Zone = document.getElementById("body1Zone");
 const body2Zone = document.getElementById("body2Zone");
 const body3Zone = document.getElementById("body3Zone");
-
-const BG1 = document.getElementById("BG1");
 
 const createQuitZone = document.getElementById("createQuitZone");
 const createGoodZone = document.getElementById("createGoodZone");
@@ -255,15 +270,16 @@ startZone.onclick = async function(){
             console.log("Fullscreen refused.");
         }
     }
-createText.style.display = "block";
-bodyChoice.style.display = "none";
 
-body1Zone.style.display = "none";
-body2Zone.style.display = "none";
-body3Zone.style.display = "none";
-    
+    createText.style.display = "block";
+    bodyChoice.style.display = "none";
+    bodyLayer.src = "";
+
+    body1Zone.style.display = "none";
+    body2Zone.style.display = "none";
+    body3Zone.style.display = "none";
+
     showScene(createScene);
-
 };
 
 fullscreenZone.onclick = function(){
@@ -284,35 +300,24 @@ createQuitZone.onclick = function(){
 
 createGoodZone.onclick = function(){
 
-    if(createText.style.display !== "none"){
+    createText.style.display = "none";
+    bodyChoice.style.display = "block";
 
-        createText.style.display = "none";
-        bodyChoice.style.display = "block";
-
-        body1Zone.style.display = "block";
-        body2Zone.style.display = "block";
-        body3Zone.style.display = "block";
-
-        return;
-    }
-
+    body1Zone.style.display = "block";
+    body2Zone.style.display = "block";
+    body3Zone.style.display = "block";
 };
-    body1Zone.onclick = function(){
 
-    BG1.src = "base1/b1s1.png";
-
+body1Zone.onclick = function(){
+    bodyLayer.src = "base1/b1s1.png";
 };
 
 body2Zone.onclick = function(){
-
-    BG1.src = "base2/b2s1.png";
-
+    bodyLayer.src = "base2/b2s1.png";
 };
 
 body3Zone.onclick = function(){
-
-    BG1.src = "base3/b3s1.png";
-
+    bodyLayer.src = "base3/b3s1.png";
 };
 </script>
 
