@@ -3,321 +3,553 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Unnamed</title>
+<title>Prototype 02</title>
 
 <style>
-html, body{
+html,
+body{
     margin:0;
     width:100%;
     height:100%;
-    background:black;
     overflow:hidden;
-}
-
-.scene{
-    position:absolute;
-    inset:0;
-    display:none;
-}
-
-#introScene{
-    display:block;
-}
-
-.scene video{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-
-#interfaceScene img{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-}
-
-.click-zone{
-    position:absolute;
-    cursor:pointer;
-    z-index:20;
-}
-
-#startZone{ left:42%; top:38%; width:16%; height:8%; }
-#fullscreenZone{ left:39%; top:50%; width:22%; height:8%; }
-#quitZone{ left:43%; top:62%; width:14%; height:8%; }
-#helpZone{ left:1%; bottom:3%; width:18%; height:8%; }
-
-#helpBox{
-    display:none;
-    position:absolute;
-    left:30px;
-    bottom:90px;
-    width:340px;
-    padding:18px;
-    border:1px solid white;
-    background:rgba(0,0,0,0.9);
-    color:white;
-    font-family:serif;
-    font-size:20px;
-    z-index:30;
-}
-
-/* création personnage */
-#createScene{
     background:black;
 }
 
-#BG1{
+/* Zone carrée du jeu */
+#game{
+    position:absolute;
+    top:50%;
+    left:50%;
+
+    width:min(100vw, 100vh);
+    height:min(100vw, 100vh);
+
+    transform:translate(-50%, -50%);
+    overflow:hidden;
+    background:black;
+}
+
+/* Fond de la pièce */
+#room{
     position:absolute;
     inset:0;
+
     width:100%;
     height:100%;
-    object-fit:cover;
+
+    object-fit:contain;
+    user-select:none;
+    pointer-events:none;
+
     z-index:1;
 }
 
-/* corps choisi, par-dessus le fond */
-#bodyLayer{
+/* Personnage */
+#player{
     position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:contain;
-    pointer-events:none;
-    z-index:2;
-}
 
-#encadre{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:contain;
-    pointer-events:none;
-    z-index:5;
-}
+    left:54%;
+    top:52%;
 
-#createText{
-    position:absolute;
-    right:13.5%;
-    top:24.5%;
-    width:27%;
-    height:46%;
-    color:black;
-    font-family:serif;
-    font-size:22px;
-    line-height:1.45;
-    text-align:left;
+    width:8%;
+    aspect-ratio:1;
+
+    transform:translate(-50%, -50%) rotate(45deg);
+    transform-origin:center;
+
+    overflow:hidden;
+    pointer-events:none;
+
     z-index:10;
 }
 
-#bodyChoice{
+/*
+L’image oc.png contient beaucoup de blanc autour du personnage.
+On l’agrandit dans une petite fenêtre pour n’afficher que le centre.
+*/
+#player img{
     position:absolute;
-    right:13.5%;
-    top:24.5%;
-    width:27%;
+
+    width:500%;
+    height:500%;
+
+    left:-200%;
+    top:-200%;
+
+    user-select:none;
+    pointer-events:none;
+}
+
+/* Zones cliquables invisibles */
+.interaction-zone{
+    position:absolute;
+    cursor:pointer;
+    z-index:15;
+}
+
+/* Rose */
+#pinkTop{
+    left:30%;
+    top:11%;
+    width:12%;
+    height:13%;
+}
+
+#pinkCabinet{
+    left:21%;
+    top:35%;
+    width:15%;
+    height:18%;
+}
+
+/* Vert */
+#greenTop{
+    left:2%;
+    top:18%;
+    width:17%;
+    height:33%;
+}
+
+#greenFloor{
+    left:61%;
+    top:58%;
+    width:15%;
+    height:19%;
+}
+
+/* Violet */
+#purpleSofa{
+    left:77%;
+    top:47%;
+    width:18%;
+    height:32%;
+}
+
+/* Violet foncé */
+#darkPurpleBag{
+    left:39%;
+    top:12%;
+    width:11%;
+    height:13%;
+}
+
+/* Bleu */
+#blueBin{
+    left:2%;
+    top:71%;
+    width:17%;
+    height:14%;
+}
+
+/* Rouge */
+#redBed{
+    left:59%;
+    top:17%;
+    width:34%;
+    height:22%;
+}
+
+/* Boîte de dialogue */
+#messageBox{
     display:none;
-    z-index:10;
+
+    position:absolute;
+    left:50%;
+    bottom:5%;
+
+    width:70%;
+    padding:16px 22px;
+
+    transform:translateX(-50%);
+
+    background:rgba(0, 0, 0, 0.92);
+    border:2px solid white;
+    color:white;
+
+    font-family:monospace;
+    font-size:20px;
+    text-align:center;
+
+    z-index:30;
 }
 
-#bodyChoice img{
-    width:100%;
-    display:block;
-}
+/* Aide pour les commandes */
+#controls{
+    position:absolute;
+    top:2%;
+    left:2%;
 
-/* zones de clic body */
-#body1Zone{
-    right:36.2%;
-    top:32%;
-    width:6%;
-    height:35%;
-    display:none;
-}
+    padding:7px 10px;
 
-#body2Zone{
-    right:28.8%;
-    top:32%;
-    width:6%;
-    height:35%;
-    display:none;
-}
+    background:rgba(0, 0, 0, 0.7);
+    color:white;
 
-#body3Zone{
-    right:21.3%;
-    top:32%;
-    width:6%;
-    height:35%;
-    display:none;
-}
+    font-family:monospace;
+    font-size:13px;
 
-#createQuitZone{
-    right:13%;
-    top:3%;
-    width:13%;
-    height:8%;
-}
-
-#createGoodZone{
-    right:17.8%;
-    bottom:20.5%;
-    width:9.5%;
-    height:5.8%;
+    z-index:30;
 }
 </style>
 </head>
 
 <body>
 
-<div class="scene" id="introScene">
-    <video id="introVideo" autoplay muted playsinline>
-        <source src="intro/intro.video.mp4" type="video/mp4">
-    </video>
-</div>
+<div id="game">
 
-<div class="scene" id="interfaceScene">
-    <img src="intro/interface.png" alt="interface">
+    <img id="room" src="test.png" alt="Room">
 
-    <div id="startZone" class="click-zone"></div>
-    <div id="fullscreenZone" class="click-zone"></div>
-    <div id="quitZone" class="click-zone"></div>
-    <div id="helpZone" class="click-zone"></div>
-
-    <div id="helpBox">
-        Create someone.<br>
-        Change them.<br>
-        See what happens.
-    </div>
-</div>
-
-<div class="scene" id="createScene">
-
-    <img id="BG1" src="backg/BG1.png" alt="background">
-
-    <img id="bodyLayer" src="" alt="">
-
-    <img id="encadre" src="encadré & texte/encadre.png" alt="encadre">
-
-    <div id="createText">
-        <p>Hey you! So, who are you</p>
-        <p>going to create today?</p>
-        <p>Let's start with something</p>
-        <p>simple... Choose your body-base!!</p>
+    <div id="player">
+        <img src="oc.png" alt="Character">
     </div>
 
-    <div id="bodyChoice">
-        <img src="choix/body.png" alt="Body Choice">
+    <div id="controls">
+        Move: arrows / WASD / ZQSD
     </div>
 
-    <div id="body1Zone" class="click-zone"></div>
-    <div id="body2Zone" class="click-zone"></div>
-    <div id="body3Zone" class="click-zone"></div>
+    <!-- Zones roses -->
+    <div id="pinkTop" class="interaction-zone"></div>
+    <div id="pinkCabinet" class="interaction-zone"></div>
 
-    <div id="createQuitZone" class="click-zone"></div>
-    <div id="createGoodZone" class="click-zone"></div>
+    <!-- Zones vertes -->
+    <div id="greenTop" class="interaction-zone"></div>
+    <div id="greenFloor" class="interaction-zone"></div>
+
+    <!-- Zone violette -->
+    <div id="purpleSofa" class="interaction-zone"></div>
+
+    <!-- Zone violet foncé -->
+    <div id="darkPurpleBag" class="interaction-zone"></div>
+
+    <!-- Zone bleue -->
+    <div id="blueBin" class="interaction-zone"></div>
+
+    <!-- Zone rouge -->
+    <div id="redBed" class="interaction-zone"></div>
+
+    <div id="messageBox"></div>
 
 </div>
 
 <script>
-const introVideo = document.getElementById("introVideo");
+const player = document.getElementById("player");
+const messageBox = document.getElementById("messageBox");
 
-const introScene = document.getElementById("introScene");
-const interfaceScene = document.getElementById("interfaceScene");
-const createScene = document.getElementById("createScene");
+/*
+Position du personnage, en pourcentage de l’image.
+*/
+let playerX = 54;
+let playerY = 52;
 
-const startZone = document.getElementById("startZone");
-const fullscreenZone = document.getElementById("fullscreenZone");
-const quitZone = document.getElementById("quitZone");
-const helpZone = document.getElementById("helpZone");
-const helpBox = document.getElementById("helpBox");
+/* Vitesse */
+const speed = 0.35;
 
-const createText = document.getElementById("createText");
-const bodyChoice = document.getElementById("bodyChoice");
-const bodyLayer = document.getElementById("bodyLayer");
+/*
+Taille approximative du personnage utilisée pour éviter
+qu’il entre dans les meubles.
+*/
+const playerHalfWidth = 2.7;
+const playerHalfHeight = 2.7;
 
-const body1Zone = document.getElementById("body1Zone");
-const body2Zone = document.getElementById("body2Zone");
-const body3Zone = document.getElementById("body3Zone");
+const pressedKeys = new Set();
 
-const createQuitZone = document.getElementById("createQuitZone");
-const createGoodZone = document.getElementById("createGoodZone");
+let messageTimer;
 
-function showScene(scene){
-    introScene.style.display = "none";
-    interfaceScene.style.display = "none";
-    createScene.style.display = "none";
+/* -------------------------------------------------- */
+/* COLLISIONS                                         */
+/* -------------------------------------------------- */
 
-    scene.style.display = "block";
+/*
+Chaque rectangle représente une partie non accessible.
+
+x1 : bord gauche
+y1 : bord supérieur
+x2 : bord droit
+y2 : bord inférieur
+
+Toutes les valeurs sont des pourcentages de l’image.
+*/
+const blockedAreas = [
+
+    /* Limites extérieures de la pièce */
+    { x1:0,  y1:0,  x2:100, y2:17 },
+    { x1:0,  y1:84, x2:100, y2:100 },
+    { x1:0,  y1:0,  x2:2.5, y2:100 },
+    { x1:96, y1:0,  x2:100, y2:100 },
+
+    /* Meubles verts en haut à gauche */
+    { x1:2, y1:18, x2:19, y2:51 },
+
+    /* Meuble rose */
+    { x1:21, y1:35, x2:36, y2:53 },
+
+    /* Cuisine en bas à gauche */
+    { x1:2, y1:50, x2:34, y2:83 },
+
+    /* Meuble central gris */
+    { x1:33, y1:50, x2:45, y2:73 },
+
+    /* Murs blancs au centre */
+    { x1:22, y1:17, x2:30, y2:36 },
+    { x1:22, y1:34, x2:28, y2:46 },
+    { x1:40, y1:17, x2:52, y2:35 },
+
+    /* Objet rose en haut */
+    { x1:30, y1:10, x2:41, y2:23 },
+
+    /* Sac violet foncé */
+    { x1:39, y1:11, x2:50, y2:24 },
+
+    /* Lit rouge */
+    { x1:59, y1:17, x2:94, y2:39 },
+
+    /* Objet vert au sol */
+    { x1:61, y1:58, x2:76, y2:78 },
+
+    /* Canapé violet */
+    { x1:76, y1:46, x2:95, y2:80 },
+
+    /* Poubelle bleue */
+    { x1:2, y1:70, x2:19, y2:85 }
+];
+
+function pointInsideRectangle(x, y, rectangle){
+    return (
+        x >= rectangle.x1 &&
+        x <= rectangle.x2 &&
+        y >= rectangle.y1 &&
+        y <= rectangle.y2
+    );
 }
 
-function showInterface(){
-    showScene(interfaceScene);
-}
+function positionIsBlocked(x, y){
 
-introVideo.onended = function(){
-    showInterface();
-};
+    /*
+    On vérifie plusieurs points autour du personnage,
+    pas seulement son centre.
+    */
+    const points = [
+        { x:x,                   y:y },
+        { x:x - playerHalfWidth, y:y },
+        { x:x + playerHalfWidth, y:y },
+        { x:x,                   y:y - playerHalfHeight },
+        { x:x,                   y:y + playerHalfHeight }
+    ];
 
-introVideo.onerror = function(){
-    showInterface();
-};
+    for(const point of points){
 
-startZone.onclick = async function(){
+        for(const area of blockedAreas){
 
-    if (!document.fullscreenElement){
-        try{
-            await document.documentElement.requestFullscreen();
-        }catch(err){
-            console.log("Fullscreen refused.");
+            if(pointInsideRectangle(point.x, point.y, area)){
+                return true;
+            }
         }
     }
 
-    createText.style.display = "block";
-    bodyChoice.style.display = "none";
-    bodyLayer.src = "";
+    return false;
+}
 
-    body1Zone.style.display = "none";
-    body2Zone.style.display = "none";
-    body3Zone.style.display = "none";
+/* -------------------------------------------------- */
+/* POSITION ET DIRECTION                              */
+/* -------------------------------------------------- */
 
-    showScene(createScene);
+function updatePlayerPosition(){
+    player.style.left = playerX + "%";
+    player.style.top = playerY + "%";
+}
+
+/*
+Dans oc.png, la flèche regarde approximativement
+vers le haut et la droite.
+
+Les angles ci-dessous compensent cette orientation.
+*/
+function faceDirection(direction){
+
+    let angle = 45;
+
+    if(direction === "right"){
+        angle = 45;
+    }
+
+    if(direction === "down"){
+        angle = 135;
+    }
+
+    if(direction === "left"){
+        angle = 225;
+    }
+
+    if(direction === "up"){
+        angle = -45;
+    }
+
+    player.style.transform =
+        `translate(-50%, -50%) rotate(${angle}deg)`;
+}
+
+function tryMove(horizontal, vertical){
+
+    const nextX = playerX + horizontal;
+    const nextY = playerY + vertical;
+
+    /*
+    On teste séparément les mouvements horizontaux
+    et verticaux pour que le personnage puisse glisser
+    le long des meubles.
+    */
+    if(!positionIsBlocked(nextX, playerY)){
+        playerX = nextX;
+    }
+
+    if(!positionIsBlocked(playerX, nextY)){
+        playerY = nextY;
+    }
+
+    updatePlayerPosition();
+}
+
+/* -------------------------------------------------- */
+/* TOUCHES                                            */
+/* -------------------------------------------------- */
+
+document.addEventListener("keydown", function(event){
+
+    const key = event.key.toLowerCase();
+
+    const allowedKeys = [
+        "arrowup",
+        "arrowdown",
+        "arrowleft",
+        "arrowright",
+        "w",
+        "a",
+        "s",
+        "d",
+        "z",
+        "q"
+    ];
+
+    if(allowedKeys.includes(key)){
+        event.preventDefault();
+        pressedKeys.add(key);
+    }
+});
+
+document.addEventListener("keyup", function(event){
+    pressedKeys.delete(event.key.toLowerCase());
+});
+
+function gameLoop(){
+
+    let movementX = 0;
+    let movementY = 0;
+
+    if(
+        pressedKeys.has("arrowleft") ||
+        pressedKeys.has("a") ||
+        pressedKeys.has("q")
+    ){
+        movementX -= speed;
+        faceDirection("left");
+    }
+
+    if(
+        pressedKeys.has("arrowright") ||
+        pressedKeys.has("d")
+    ){
+        movementX += speed;
+        faceDirection("right");
+    }
+
+    if(
+        pressedKeys.has("arrowup") ||
+        pressedKeys.has("w") ||
+        pressedKeys.has("z")
+    ){
+        movementY -= speed;
+        faceDirection("up");
+    }
+
+    if(
+        pressedKeys.has("arrowdown") ||
+        pressedKeys.has("s")
+    ){
+        movementY += speed;
+        faceDirection("down");
+    }
+
+    /*
+    Empêche d’aller plus vite en diagonale.
+    */
+    if(movementX !== 0 && movementY !== 0){
+        movementX *= 0.71;
+        movementY *= 0.71;
+    }
+
+    if(movementX !== 0 || movementY !== 0){
+        tryMove(movementX, movementY);
+    }
+
+    requestAnimationFrame(gameLoop);
+}
+
+updatePlayerPosition();
+gameLoop();
+
+/* -------------------------------------------------- */
+/* MESSAGES                                           */
+/* -------------------------------------------------- */
+
+function showMessage(text){
+
+    messageBox.textContent = text;
+    messageBox.style.display = "block";
+
+    clearTimeout(messageTimer);
+
+    messageTimer = setTimeout(function(){
+        messageBox.style.display = "none";
+    }, 3500);
+}
+
+/* Rose */
+document.getElementById("pinkTop").onclick = function(){
+    showMessage("I don't want to open that.");
 };
 
-fullscreenZone.onclick = function(){
-    document.documentElement.requestFullscreen();
+document.getElementById("pinkCabinet").onclick = function(){
+    showMessage("I don't want to open that.");
 };
 
-quitZone.onclick = function(){
-    window.close();
+/* Vert */
+document.getElementById("greenTop").onclick = function(){
+    showMessage("Ew... I should clean that.");
 };
 
-helpZone.onclick = function(){
-    helpBox.style.display = helpBox.style.display === "block" ? "none" : "block";
+document.getElementById("greenFloor").onclick = function(){
+    showMessage("Ew... I should clean that.");
 };
 
-createQuitZone.onclick = function(){
-    showInterface();
+/* Violet */
+document.getElementById("purpleSofa").onclick = function(){
+    showMessage("I should stop sleeping there. It stinks.");
 };
 
-createGoodZone.onclick = function(){
-
-    createText.style.display = "none";
-    bodyChoice.style.display = "block";
-
-    body1Zone.style.display = "block";
-    body2Zone.style.display = "block";
-    body3Zone.style.display = "block";
+/* Violet foncé */
+document.getElementById("darkPurpleBag").onclick = function(){
+    showMessage("I really need to throw that away...");
 };
 
-body1Zone.onclick = function(){
-    bodyLayer.src = "base1/b1s1.png";
+/* Bleu */
+document.getElementById("blueBin").onclick = function(){
+    showMessage(
+        "There were worms in it last time... Everything needs to be thrown away."
+    );
 };
 
-body2Zone.onclick = function(){
-    bodyLayer.src = "base2/b2s1.png";
-};
-
-body3Zone.onclick = function(){
-    bodyLayer.src = "base3/b3s1.png";
+/* Rouge */
+document.getElementById("redBed").onclick = function(){
+    showMessage("I don't have the energy to make this bed...");
 };
 </script>
 
