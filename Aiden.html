@@ -255,60 +255,77 @@ html, body{
 .character-style-text p{
     margin:0 0 18px 0;
 }
-    /* ---------- Prototype 02 ---------- */
+   /* ---------- Mini-games list ---------- */
 
-.prototype02-part{
+.mini-games-part{
     display:flex;
     align-items:flex-start;
-    gap:30px;
+    gap:50px;
 
-
+    /* Séparation invisible avec la partie redesign */
     margin-top:90px;
 
     max-width:1200px;
 }
 
-.prototype02-card{
-    display:block;
-    width:380px;
+/* Colonne contenant les deux jeux */
+.mini-games-list{
+    width:250px;
     flex-shrink:0;
+}
+
+/* Chaque petit encadré */
+.journal-game-card{
+    display:block;
+    width:250px;
+    margin-bottom:30px;
 
     color:white;
     text-decoration:none;
 }
 
-.prototype02-card img{
+/* Images des jeux */
+.journal-game-card img{
     display:block;
-    width:100%;
 
+    width:100%;
+    height:250px;
+    object-fit:contain;
+
+    background:black;
     border:1px solid #00ff9c;
+
     transition:.2s;
 }
 
-.prototype02-card img:hover{
+.journal-game-card img:hover{
     transform:scale(1.02);
     opacity:.9;
 }
 
-.prototype02-card h2{
-    margin:12px 0 0 0;
+/* Titres sous les images */
+.journal-game-card h2{
+    margin:8px 0 0 0;
 
     color:#00ff9c;
+    font-size:16px;
     font-weight:normal;
     letter-spacing:2px;
 }
 
-.prototype02-text{
-    max-width:760px;
+/* Texte placé à droite */
+.mini-games-text{
+    max-width:700px;
 
     color:white;
     font-size:14px;
     line-height:1.6;
 }
 
-.prototype02-text p{
+.mini-games-text p{
     margin:0 0 18px 0;
 }
+    
 </style>
 </head>
     
@@ -506,18 +523,37 @@ html, body{
 
 </div>
 
-    <div class="prototype02-part">
+    <div class="mini-games-part">
 
-    <a class="prototype02-card"
-       href="prototype02/prototype02.html">
+    <div class="mini-games-list">
 
-        <img src="prototype02/test.png" alt="Prototype 02">
+        <!-- UNNAMED -->
 
-        <h2>Prototype_02</h2>
+        <a class="journal-game-card"
+           href="unnamed game/index.html">
 
-    </a>
+            <img src="unnamed game/intro/interface.png"
+                 alt="Unnamed">
 
-    <div class="prototype02-text">
+            <h2>UNNAMED</h2>
+
+        </a>
+
+        <!-- PROTOTYPE 02 -->
+
+        <a class="journal-game-card"
+           href="prototype02/prototype02.html">
+
+            <img src="prototype02/test.png"
+                 alt="Prototype 02">
+
+            <h2>Prototype_02</h2>
+
+        </a>
+
+    </div>
+
+    <div class="mini-games-text">
 
         <p>
             Texte d'Aiden ici.
